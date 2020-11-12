@@ -1,0 +1,54 @@
+.MenuButton {
+    height: 22px;
+    width: 30px;
+    padding: 0;
+    position: absolute;
+    top: 19px;
+    right: 19px;
+    box-sizing: border-box;
+    z-index: 200;
+}
+
+.MenuButton div {
+    border-radius: 9px;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    background-color: #01b7ee;
+    box-sizing: border-box;
+}
+
+.MenuButton div:nth-child(1) {
+    top: 0px;
+}
+
+.MenuButton div:nth-child(2), .MenuButton div:nth-child(3) {
+    top: .5em;
+    transition: .5s ease-in-out;
+}
+
+.MenuButton div:nth-child(4) {
+    top: 1em;
+}
+
+.MenuButton div:nth-child(1).Open {
+    visibility: hidden;
+}
+
+.MenuButton div:nth-child(2).Open {
+    transform: rotate(45deg);
+}
+
+.MenuButton div:nth-child(3).Open {
+    transform: rotate(-45deg);
+}
+
+.MenuButton div:nth-child(4).Open {
+    visibility: hidden;
+}
+
+@media (min-width: 650px) {
+    .MenuButton {
+        display: none;
+    }
+}
