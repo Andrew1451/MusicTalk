@@ -1,0 +1,24 @@
+.NavigationList {
+    display: block;
+}
+
+@media (min-width: 650px) {
+    .NavigationList {
+        display: flex;
+        justify-content: space-between;
+        width: 47%;
+        margin-left: auto;
+        margin-right: 23px;
+        height: 24px;
+    }
+    a:hover {
+        border-bottom: 1px solid lime;
+    }
+}
+
+@media (min-width: 1260px) {
+    .NavigationList {
+        width: 474px;
+        margin-right: 70px;
+    }
+}

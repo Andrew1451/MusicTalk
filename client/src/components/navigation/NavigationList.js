@@ -1,13 +1,14 @@
 import React from 'react';
 import NavigationItem from './NavigationItem';
+import classes from './NavigationList.module.css';
 
 const NavigationList = props => {
     return (
-        <ul className={NavigationList} onClick={props.clicked}>
-            <NavigationItem link='/'>Home</NavigationItem>
-            <NavigationItem link='/profile'>Profile</NavigationItem>
-            <NavigationItem link='/sign-up'>SignUp</NavigationItem>
-            <NavigationItem link='/sign-in'>SignIn</NavigationItem>
+        <ul className={classes.NavigationList} onClick={props.clicked}>
+            <NavigationItem link='/' exact>Home</NavigationItem>
+            <NavigationItem link='/profile' exact>Profile</NavigationItem>
+            <NavigationItem link='/sign-up' exact>SignUp</NavigationItem>
+            <NavigationItem link='/sign-in' exact>SignIn</NavigationItem>
         </ul>
     )
 }

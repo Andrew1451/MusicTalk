@@ -17,3 +17,18 @@
 .Accent {
     color: #01b7ee;
 }
+
+@media (min-width: 650px) {
+    .Logo {
+        margin-top: 8px;
+        position: relative;
+        z-index: 100;
+    }
+}
+
+@media (min-width: 1260px) {
+    .Logo {
+        margin-left: 50px;
+    }
+}
+

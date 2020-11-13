@@ -13,8 +13,17 @@
     transition: transform 0.3s ease-out;
 }
 
+.MenuContainer {
+    overflow: hidden;
+    height: 182px;
+    width: 200px;
+    position: relative;
+    float: right;
+    top: -64px;
+}
+
 .Open {
-    transform: translateX(-200px);
+    transform: translateX(-219px);
 }
 
 .Close {
@@ -23,6 +32,9 @@
 
 @media (min-width: 650px) {
     .SideDrawer {
+        display: none;
+    }
+    .MenuContainer {
         display: none;
     }
 }

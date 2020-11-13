@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../components/Logo';
+import NavBar from '../components/navigation/NavBar';
 import SideDrawer from '../components/navigation/SideDrawer';
 
 const Layout = props => {
@@ -12,6 +13,7 @@ const Layout = props => {
     return (
         <>
             <Logo />
+            <NavBar />
             <SideDrawer sideDrawerToggled={sideDrawerToggledHandler} open={sideDrawer} />
             <main>{props.children}</main>
         </>

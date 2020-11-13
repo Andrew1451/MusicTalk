@@ -6,7 +6,7 @@ const Logo = () => {
     return (
         <ul className={classes.Logo}>
             <li>
-                <NavLink to='/'>
+                <NavLink to='/' exact>
                     <span className={classes.Accent}>M</span>usic<span className={classes.Accent}>T</span>alk
                 </NavLink>
             </li>

@@ -11,10 +11,12 @@ const SideDrawer = props => {
     return (
         <>
             <MenuButton clicked={props.sideDrawerToggled} open={props.open} />
-            <div className={attachedClasses.join(' ')}>
-                <nav>
-                    <NavigationList clicked={props.sideDrawerToggled} />
-                </nav>
+            <div className={classes.MenuContainer}>
+                <div className={attachedClasses.join(' ')}>
+                    <nav>
+                        <NavigationList clicked={props.sideDrawerToggled} />
+                    </nav>
+                </div>
             </div>
         </>
     )
