@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Layout.css';
 import Logo from '../components/Logo';
 import NavBar from '../components/navigation/NavBar';
 import SideDrawer from '../components/navigation/SideDrawer';
