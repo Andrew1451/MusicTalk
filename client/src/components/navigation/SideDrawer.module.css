@@ -13,13 +13,18 @@
     transition: transform 0.3s ease-out;
 }
 
+.SideDrawer li {
+    margin-bottom: 5px;
+}
+
 .MenuContainer {
     overflow: hidden;
-    height: 182px;
-    width: 200px;
+    height: 200px;
+    width: 141px;
     position: relative;
     float: right;
     top: -64px;
+    z-index: 100;
 }
 
 .Open {

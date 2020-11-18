@@ -1,0 +1,45 @@
+.Form {
+    width: 80%;
+    max-width: 455px;
+    border: 2px solid #01b7ee;
+    padding: 32px;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+}
+
+.Form label {
+    margin-top: 13px;
+    color: #01b7ee;
+}
+
+.Form h3 {
+    color: white;
+    text-align: center;
+    margin: 8px 0;
+}
+
+.FormContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    position: absolute;
+    top: 133px;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 27px;
+    margin-top: 17px;
+}
+
+.Buttons button {
+    padding: 1px 10px;
+    font-size: .9rem;
+    border-radius: 3px;
+    border: none;
+    background-color: #01b7ee;
+}
