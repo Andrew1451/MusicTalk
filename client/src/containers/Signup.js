@@ -15,7 +15,7 @@ const Signup = props => {
     return (
         <div className={classes.FormContainer}>
             <form className={classes.Form} onSubmit={submitHandler}>
-                <h3><span>S</span>ign<span>U</span>p</h3>
+                <h3>SignUp</h3>
                 <label htmlFor='username'>Username</label>
                 <input id='username' type='text' onChange={inputHandler} />
                 <label htmlFor='password'>Password</label>
