@@ -8,6 +8,7 @@ const session       = require('express-session');
 const bcrypt        = require('bcrypt');
 
 require('dotenv').config();
+
 app.use(cors());
 
 const db = mysql.createConnection({
@@ -27,6 +28,22 @@ app.use(session({
 }));
 const saltRounds = 10;
 
+app.post('/sign-up', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        db.query(
+            "INSERT INTO users (username, password) VALUES (?, ?)",
+            [username, hashedPassword], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.redirect('/');
+                }
+            }
+        )
+    })
+})
 
 
 app.listen(port, () => {
