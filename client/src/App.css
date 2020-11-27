@@ -34,6 +34,15 @@ textarea {
   margin: 0;
 }
 
+input, textarea {
+  font-size: .9rem;
+  padding-left: .4em;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 [type="reset"],
 [type="submit"],
 button,
@@ -79,6 +88,10 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+input:focus {
+  outline: none;
 }
 
 .App {
