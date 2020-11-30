@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import * as actions from '../store/actions/index';
+import { connect } from 'react-redux';
 import classes from './Signup.module.css';
+import { Redirect } from 'react-router-dom';
 
 const Signup = props => {
     const [formInputs, setFormInputs] = useState({
@@ -20,10 +22,11 @@ const Signup = props => {
         e.preventDefault();
         const username = formInputs.username;
         const password = formInputs.password;
-        axios.post('/sign-up', {
-            username: username,
-            password: password
-        })
+        props.onSignup(username, password);
+    }
+
+    if (props.redirectTo) {
+        return <Redirect push to={props.redirectTo} />
     }
 
     return (
@@ -43,4 +46,16 @@ const Signup = props => {
     )
 }
 
-export default Signup
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSignup: (username, password) => dispatch(actions.signup(username, password))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup) 

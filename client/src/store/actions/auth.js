@@ -7,9 +7,10 @@ export const signupStart = () => {
     }
 }
 
-export const signupFail = () => {
+export const signupFail = (errorMessage) => {
     return {
-        type: actionTypes.SIGNUP_FAIL
+        type: actionTypes.SIGNUP_FAIL,
+        errorMessage: errorMessage
     }
 }
 
@@ -22,12 +23,11 @@ export const signupSuccess = () => {
 export const signup = (username, password) => {
     return dispatch => {
         dispatch(signupStart());
-        axios.post('/signup', {
+        axios.post('/sign-up', {
             username: username,
             password: password
         }).then(response => {
-            console.log(response);
-            dispatch(signupSuccess());
+            dispatch(signupSuccess(response.data.username));
         }).catch(error => {
             console.log(error);
             dispatch(signupFail());

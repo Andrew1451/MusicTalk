@@ -28,7 +28,7 @@ app.use(session({
 }));
 const saltRounds = 10;
 
-app.post('/sign-up', (req, res) => {
+app.post('/sign-up', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
@@ -38,7 +38,8 @@ app.post('/sign-up', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.redirect('/');
+                    res.cookie('user', username, {maxAge: 60 * 60 * 24})
+                    res.send({username: username});
                 }
             }
         )
