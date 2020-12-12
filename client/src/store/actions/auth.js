@@ -14,9 +14,10 @@ export const signupFail = (errorMessage) => {
     }
 }
 
-export const signupSuccess = () => {
+export const signupSuccess = (username) => {
     return {
-        type: actionTypes.SIGNUP_SUCCESS
+        type: actionTypes.SIGNUP_SUCCESS,
+        user: username
     }
 }
 
@@ -26,11 +27,21 @@ export const signup = (username, password) => {
         axios.post('/sign-up', {
             username: username,
             password: password
-        }).then(response => {
-            dispatch(signupSuccess(response.data.username));
+        }).then(res => {
+            let errorMessage = '';
+            if (res.data.error) {
+                errorMessage = 'Sorry, something went wrong :('
+                if (res.data.error.code === 'ER_DUP_ENTRY') {
+                    errorMessage = 'Username already exists';
+                }
+                console.log(errorMessage)
+                dispatch(signupFail(errorMessage));
+            }
+            if (res.data.username) {
+                dispatch(signupSuccess(res.data.username));
+            }
         }).catch(error => {
-            console.log(error);
-            dispatch(signupFail());
+            dispatch(signupFail(error));
         })
     }
 }

@@ -23,10 +23,21 @@ const signupFail = (state, action) => {
     }
 }
 
+const signupSuccess = (state, action) => {
+    return {
+        ...state,
+        user: action.user,
+        loading: false,
+        isLoggedIn: true,
+        error: null
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SIGNUP_START: return signupStart(state, action);
         case actionTypes.SIGNUP_FAIL: return signupFail(state, action);
+        case actionTypes.SIGNUP_SUCCESS: return signupSuccess(state, action);
         default: return state;
     }
 }

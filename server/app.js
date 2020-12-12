@@ -1,6 +1,7 @@
 const express       = require('express');
 const app           = express();
 const bodyParser    = require('body-parser');
+const cookieParser  = require('cookie-parser');
 const port          = process.env.PORT || 5000;
 const mysql         = require('mysql');
 const cors          = require('cors');
@@ -18,13 +19,14 @@ const db = mysql.createConnection({
     database: 'MusicTalkDatabase'
 })
 
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SHH,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
 }));
 const saltRounds = 10;
 
@@ -36,9 +38,9 @@ app.post('/sign-up', (req, res, next) => {
             "INSERT INTO users (username, password) VALUES (?, ?)",
             [username, hashedPassword], (err, result) => {
                 if (err) {
-                    console.log(err);
+                    res.send({error: err})
                 } else {
-                    res.cookie('user', username, {maxAge: 60 * 60 * 24})
+                    res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30})
                     res.send({username: username});
                 }
             }

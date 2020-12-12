@@ -34,9 +34,9 @@ const Signup = props => {
             <form className={classes.Form} onSubmit={submitHandler}>
                 <h3>SignUp</h3>
                 <label htmlFor='username'>Username</label>
-                <input id='username' type='text' value={formInputs.username} onChange={inputChangeHandler} />
+                <input id='username' type='text' value={formInputs.username} onChange={inputChangeHandler} required />
                 <label htmlFor='password'>Password</label>
-                <input id='password' type='password' value={formInputs.password} onChange={inputChangeHandler} />
+                <input id='password' type='password' value={formInputs.password} onChange={inputChangeHandler} required />
                 <div className={classes.Buttons}>
                     <button type='button'>Cancel</button>
                     <button type='submit'>Submit</button>
