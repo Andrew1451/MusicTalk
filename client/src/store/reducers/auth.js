@@ -4,6 +4,7 @@ const initialState = {
     user: '',
     isLoggedIn: false,
     loading: false,
+    redirectTo: '',
     error: null
 }
 
@@ -11,6 +12,7 @@ const signupStart = (state, action) => {
     return {
         ...state,
         loading: true,
+        redirectTo: '',
         error: null
     }
 }
@@ -19,6 +21,7 @@ const signupFail = (state, action) => {
     return {
         ...state,
         loading: false,
+        redirectTo: '',
         error: action.errorMessage
     }
 }
@@ -29,6 +32,7 @@ const signupSuccess = (state, action) => {
         user: action.user,
         loading: false,
         isLoggedIn: true,
+        redirectTo: '/profile',
         error: null
     }
 }

@@ -25,8 +25,8 @@ const Signup = props => {
         props.onSignup(username, password);
     }
 
-    if (props.redirectTo) {
-        return <Redirect push to={props.redirectTo} />
+    if (props.state.redirectTo) {
+        return <Redirect push to={props.state.redirectTo} />
     }
 
     return (
@@ -48,7 +48,7 @@ const Signup = props => {
 
 const mapStateToProps = state => {
     return {
-
+        state: state
     }
 }
 

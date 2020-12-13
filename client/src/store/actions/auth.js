@@ -14,10 +14,11 @@ export const signupFail = (errorMessage) => {
     }
 }
 
-export const signupSuccess = (username) => {
+export const signupSuccess = (username, redirect) => {
     return {
         type: actionTypes.SIGNUP_SUCCESS,
-        user: username
+        user: username,
+        redirect
     }
 }
 
@@ -38,7 +39,7 @@ export const signup = (username, password) => {
                 dispatch(signupFail(errorMessage));
             }
             if (res.data.username) {
-                dispatch(signupSuccess(res.data.username));
+                dispatch(signupSuccess(res.data.username, '/profile'));
             }
         }).catch(error => {
             dispatch(signupFail(error));
