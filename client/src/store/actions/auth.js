@@ -22,6 +22,12 @@ export const signupSuccess = (username, redirect) => {
     }
 }
 
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
 export const signup = (username, password) => {
     return dispatch => {
         dispatch(signupStart());
@@ -35,14 +41,14 @@ export const signup = (username, password) => {
                 if (res.data.error.code === 'ER_DUP_ENTRY') {
                     errorMessage = 'Username already exists';
                 }
-                console.log(errorMessage)
                 dispatch(signupFail(errorMessage));
             }
             if (res.data.username) {
                 dispatch(signupSuccess(res.data.username, '/profile'));
             }
         }).catch(error => {
-            dispatch(signupFail(error));
+            console.log(error)
+            dispatch(signupFail('An error occured'));
         })
     }
 }

@@ -37,11 +37,23 @@ const signupSuccess = (state, action) => {
     }
 }
 
+const logout = (state, action) => {
+    return {
+        ...state,
+        user: '',
+        loading: false,
+        isLoggedIn: false,
+        redirectTo: '',
+        error: null
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SIGNUP_START: return signupStart(state, action);
         case actionTypes.SIGNUP_FAIL: return signupFail(state, action);
         case actionTypes.SIGNUP_SUCCESS: return signupSuccess(state, action);
+        case actionTypes.AUTH_LOGOUT: return logout(state, action);
         default: return state;
     }
 }

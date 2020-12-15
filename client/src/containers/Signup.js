@@ -25,8 +25,23 @@ const Signup = props => {
         props.onSignup(username, password);
     }
 
+    const cancelHandler = () => {
+        const clearForm = {
+            ...formInputs,
+            username: '',
+            password: ''
+        }
+        setFormInputs(clearForm);
+    }
+
     if (props.state.redirectTo) {
         return <Redirect push to={props.state.redirectTo} />
+    }
+
+    let errorMessage;
+    
+    if (props.state.error) {
+        errorMessage = props.state.error;
     }
 
     return (
@@ -38,9 +53,10 @@ const Signup = props => {
                 <label htmlFor='password'>Password</label>
                 <input id='password' type='password' value={formInputs.password} onChange={inputChangeHandler} required />
                 <div className={classes.Buttons}>
-                    <button type='button'>Cancel</button>
+                    <button type='button' onClick={cancelHandler}>Cancel</button>
                     <button type='submit'>Submit</button>
                 </div>
+                <p className={classes.Error}>{errorMessage}</p>
             </form>
         </div>
     )

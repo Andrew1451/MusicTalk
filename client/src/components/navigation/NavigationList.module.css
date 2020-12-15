@@ -6,7 +6,7 @@
     .NavigationList {
         display: flex;
         justify-content: space-between;
-        width: 47%;
+        width: fit-content;
         margin-left: auto;
         margin-right: 23px;
         height: 24px;
