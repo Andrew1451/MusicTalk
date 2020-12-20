@@ -28,6 +28,12 @@ export const logout = () => {
     }
 }
 
+export const login = () => {
+    return {
+        type: actionTypes.LOGIN
+    }
+}
+
 export const signup = (username, password) => {
     return dispatch => {
         dispatch(signupStart());
