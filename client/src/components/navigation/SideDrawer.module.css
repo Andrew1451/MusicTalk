@@ -21,9 +21,10 @@
     overflow: hidden;
     height: 200px;
     width: 141px;
-    position: relative;
+    position: absolute;
     float: right;
-    top: -64px;
+    top: 0;
+    right: 0;
     z-index: 100;
 }
 

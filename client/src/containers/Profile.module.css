@@ -1,0 +1,113 @@
+.Profile {
+    width: 80%;
+    margin: 2rem auto;
+}
+
+.Profile h2 {
+    color: white;
+    text-align: center;
+}
+
+.Profile h3 {
+    color: #01b7ee;
+    margin-bottom: .7rem;
+    padding-left: 2px;
+}
+
+.FriendsList {
+    border: 1px solid white;
+    width: 100%;
+    height: 8rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-left: 8px;
+}
+
+.Friend {
+    color: white;
+    margin: 10px;
+    width: 132px;
+    max-width: 132px;
+    overflow: scroll;
+    font-size: 16px;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 27px;
+    margin-top: 17px;
+}
+
+.Buttons button {
+    padding: 1px 10px;
+    font-size: .9rem;
+    border-radius: 3px;
+    color: #01b7ee;
+    border: none;
+    background-color: black;
+}
+
+.PostContainer {
+    border: 1px solid white;
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    color: white;
+}
+
+.PostName {
+    background-color: #01b7ee;
+    color: white;
+    width: 100%;
+    margin: 0;
+    height: 29px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.PostName p {
+    margin: 0;
+    padding-left: 8px;
+    padding-top: 2px;
+    color: white;
+}
+
+.Post {
+    width: 100%;
+    height: fit-content;
+    padding: 0 8px;
+    margin-top: 6px;
+}
+
+.Post p {
+    color: white;
+    margin: 0;
+    margin-top: 3px;
+    font-size: .9rem;
+    line-height: 1.2rem;
+}
+
+.LikeComment {
+    font-size: 0.85rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    color: #01b7ee;
+    border: none;
+    display: inline-flex;
+    background-color: black;
+    border-top: 1px solid white;
+    margin-top: 5px;
+}
+
+.LikeComment div {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    padding: 4px;
+    border-right: 1px solid white;
+    margin: auto;
+}
