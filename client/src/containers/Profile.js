@@ -17,7 +17,6 @@ const Profile = ({state, onLogin}) => {
             <h2>Hi, {state.user}!</h2>
             <section>
                 <h3>Friends</h3>
-                {/* <hr></hr> */}
                 <div className={classes.FriendsList}>
                     {placeholderFriends.map((friend, i) => {
                         return <p className={classes.Friend} key={i}>{friend}</p>

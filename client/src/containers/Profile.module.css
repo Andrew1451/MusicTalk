@@ -111,3 +111,16 @@
     border-right: 1px solid white;
     margin: auto;
 }
+
+@media (min-width: 650px) {
+    .Profile {
+        width: 30rem;
+        margin: 4rem auto;
+        border: 2px solid #01b7ee;
+        padding: 90px;
+        padding-top: 50px;
+    }
+    .Post {
+        padding: 4px 17px;
+    }
+}
