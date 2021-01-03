@@ -41,6 +41,10 @@
     color: #d4fd02;
 }
 
+.FindFriends:hover {
+    border: none;
+}
+
 .SearchButton {
     float: right;
     margin-right: 2rem;

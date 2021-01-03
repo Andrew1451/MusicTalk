@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './Friends.module.css';
 
-const Friends = props => {
+const FindFriends = props => {
     const placeholderFriends = ['MusicMan', 'LooneyTunes', 'MajorMinor', 'guitarguy', 'OfficialMozart', 'iLoveMusic']
     return (
         <div className={classes.FriendsPage}>
-            <h1>Your Friends</h1>
-            <NavLink to='/find-friends' className={classes.FindFriends}>Find Friends</NavLink>
+            <h1>Find Friends</h1>
+            <NavLink to='/friends' className={classes.FindFriends}>Your Friends</NavLink>
             <hr></hr>
             <input type='text' placeholder='Search Friends'></input>
             <button type='button' className={classes.SearchButton}>Search</button>
@@ -20,4 +20,4 @@ const Friends = props => {
     )
 }
 
-export default Friends;
+export default FindFriends
