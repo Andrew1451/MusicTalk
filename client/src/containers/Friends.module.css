@@ -1,0 +1,58 @@
+.FriendsPage {
+    margin-top: 23px;
+}
+
+.FriendsPage h1 {
+    color: #01b7ee;
+    font-size: 1.3rem;
+    padding-left: 2rem;
+    margin: none;
+    display: inline;
+}
+
+.FriendsPage hr {
+    width: 18.9rem;
+    margin-top: 0;
+    margin-left: 2rem;
+}
+
+.FriendsPage input {
+    font-size: .9rem;
+    padding-left: .4em;
+    margin-left: 2rem;
+    height: 1.7rem;
+    width: 14.4rem;
+}
+
+.FriendsPage li {
+    color: white;
+    margin: 12px 0;
+}
+
+.FindFriends {
+    font-size: 0.9rem;
+    float: right;
+    background-color: black;
+    color: white;
+    border: 1px solid #01b7ee;
+    border-radius: 2px;
+    margin-right: 1.6rem;
+    border: none;
+    color: #d4fd02;
+}
+
+.SearchButton {
+    float: right;
+    margin-right: 2rem;
+    height: 1.7rem;
+}
+
+@media (min-width: 650px) {
+    .FriendsPage {
+        border: 2px solid #01b7ee;
+        width: 29rem;
+        padding: 3rem;
+        margin: 4rem auto;
+        padding-top: 4rem;
+    }
+}
