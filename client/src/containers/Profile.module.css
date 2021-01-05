@@ -56,6 +56,7 @@
     height: fit-content;
     border-radius: 5px;
     color: white;
+    margin-bottom: 2rem;
 }
 
 .PostName {
@@ -122,5 +123,8 @@
     }
     .Post {
         padding: 4px 17px;
+    }
+    .PostContainer {
+        width: 20rem;
     }
 }
