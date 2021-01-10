@@ -29,6 +29,21 @@
     margin: 12px 0;
 }
 
+.FriendsPage li a {
+    color: white;
+    margin: 12px 0;
+}
+
+.FriendsPage li a:hover {
+    color: #d4fd02;
+    border: none;
+}
+
+.FriendsPage li:hover {
+    cursor: pointer;
+    color: #d4fd02;
+}
+
 .FindFriends {
     font-size: 0.9rem;
     float: right;

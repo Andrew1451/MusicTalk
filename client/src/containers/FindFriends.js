@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom';
 import classes from './Friends.module.css';
 
 const FindFriends = props => {
-    const placeholderFriends = ['MusicMan', 'LooneyTunes', 'MajorMinor', 'guitarguy', 'OfficialMozart', 'iLoveMusic']
+    const placeholderFriends = ['MusicMan', 'LooneyTunes', 'MajorMinor', 'guitarguy', 'OfficialMozart', 'iLoveMusic'];
+    // const addUser(user) => {
+        //add user
+    // }
     return (
         <div className={classes.FriendsPage}>
             <h1>Find Friends</h1>
@@ -13,7 +16,8 @@ const FindFriends = props => {
             <button type='button' className={classes.SearchButton}>Search</button>
             <ul>
             {placeholderFriends.map((username, i) => {
-               return <li key={i}>{username}</li> 
+                            // onClick={addUser(username)}
+                return <li key={i}>{username}</li> 
             })}
             </ul>
         </div>

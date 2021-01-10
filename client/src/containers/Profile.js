@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import classes from './Profile.module.css';
 import * as actions from '../store/actions/index';
 
@@ -19,7 +20,7 @@ const Profile = ({state, onLogin}) => {
                 <h3>Friends</h3>
                 <div className={classes.FriendsList}>
                     {placeholderFriends.map((friend, i) => {
-                        return <p className={classes.Friend} key={i}>{friend}</p>
+                        return <NavLink to={`/friend/${friend}`} className={classes.Friend} key={i}>{friend}</NavLink>
                     })}
                 </div>
                 <div className={classes.Buttons}>

@@ -13,7 +13,7 @@ const Friends = props => {
             <button type='button' className={classes.SearchButton}>Search</button>
             <ul>
             {placeholderFriends.map((username, i) => {
-               return <li key={i}>{username}</li> 
+               return <li key={i}><NavLink to={`/friend/${username}`}>{username}</NavLink></li> 
             })}
             </ul>
         </div>

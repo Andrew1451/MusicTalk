@@ -25,6 +25,11 @@
     padding-left: 8px;
 }
 
+.FriendsList a:hover {
+    border: none;
+    color: #d4fd02;
+}
+
 .Friend {
     color: white;
     margin: 10px;
@@ -111,6 +116,10 @@
     padding: 4px;
     border-right: 1px solid white;
     margin: auto;
+}
+
+.LikeComment div:hover {
+    cursor: pointer;
 }
 
 @media (min-width: 650px) {

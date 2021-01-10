@@ -94,6 +94,10 @@ input:focus {
   outline: none;
 }
 
+button:focus {
+  outline: none;
+}
+
 .App {
   min-height: 100vh;
 }
