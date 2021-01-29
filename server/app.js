@@ -30,7 +30,7 @@ app.use(session({
 }));
 const saltRounds = 10;
 
-app.post('/sign-up', (req, res, next) => {
+app.post('/sign-up', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
@@ -40,7 +40,7 @@ app.post('/sign-up', (req, res, next) => {
                 if (err) {
                     res.send({error: err})
                 } else {
-                    res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30})
+                    res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
                     res.send({username: username});
                 }
             }
@@ -48,6 +48,25 @@ app.post('/sign-up', (req, res, next) => {
     })
 })
 
+app.post('/signin', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    db.query("SELECT * FROM users WHERE username = ?",
+    [username], (err, result) => {
+        if (!result[0]) {
+            res.send({err: 'username doesn\'t exist :('})
+        } else {
+            bcrypt.compare(password, result[0].password, (err, match) => {
+                if (match) {
+                    res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
+                    res.send({username});
+                } else {
+                    res.send({err: 'wrong password :('})
+                }
+            })
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`server running on port: ${port}`);

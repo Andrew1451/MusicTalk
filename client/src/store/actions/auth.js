@@ -22,6 +22,27 @@ export const signupSuccess = (username, redirect) => {
     }
 }
 
+export const signinStart = () => {
+    return {
+        type: actionTypes.SIGNIN_START
+    }
+}
+
+export const signinFail = (error) => {
+    return {
+        type: actionTypes.SIGNIN_FAIL,
+        error: error
+    }
+}
+
+export const signinSuccess = (username, redirect) => {
+    return {
+        type: actionTypes.SIGNIN_SUCCESS,
+        user: username,
+        redirect
+    }
+}
+
 export const logout = () => {
     return {
         type: actionTypes.AUTH_LOGOUT
@@ -31,6 +52,21 @@ export const logout = () => {
 export const login = () => {
     return {
         type: actionTypes.LOGIN
+    }
+}
+
+export const signin = (username, password) => {
+    return dispatch => {
+        dispatch(signinStart());
+        axios.post('/signin', {username, password})
+        .then(res => {
+            if (res.data.err) {
+                dispatch(signinFail(res.data.err));
+            }
+            if (res.data.username) {
+                dispatch(signinSuccess(res.data.username, '/profile'));
+            }
+        })
     }
 }
 
