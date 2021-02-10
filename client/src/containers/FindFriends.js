@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import classes from './Friends.module.css';
 
 const FindFriends = props => {
-    const placeholderFriends = ['MusicMan', 'LooneyTunes', 'MajorMinor', 'guitarguy', 'OfficialMozart', 'iLoveMusic'];
-    // const addUser(user) => {
-        //add user
-    // }
+    useEffect(() => {
+        axios.get('/find-friends', {params: {user: props.state.user}})
+        .then(res => {
+            let friendArray = [];
+            res.data.forEach(friend => friendArray.push(friend.username));
+            setFriends(friendArray);
+        })
+        .catch(err => console.log(err));
+    }, [props.state])
+    const [friends, setFriends] = useState([]);
+    
     return (
         <div className={classes.FriendsPage}>
             <h1>Find Friends</h1>
@@ -15,13 +24,19 @@ const FindFriends = props => {
             <input type='text' placeholder='Search Friends'></input>
             <button type='button' className={classes.SearchButton}>Search</button>
             <ul>
-            {placeholderFriends.map((username, i) => {
+            {friends.map((username, i) => {
                             // onClick={addUser(username)}
-                return <li key={i}>{username}</li> 
+                return <li key={i} >{username}</li> 
             })}
             </ul>
         </div>
     )
 }
 
-export default FindFriends
+const mapStateToProps = state => {
+    return {
+        state
+    }
+}
+
+export default connect(mapStateToProps)(FindFriends);
