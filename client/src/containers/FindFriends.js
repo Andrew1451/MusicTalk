@@ -15,7 +15,14 @@ const FindFriends = props => {
         .catch(err => console.log(err));
     }, [props.state])
     const [friends, setFriends] = useState([]);
-    
+    const addUser = username => {
+        console.log(`add user ${username}`)
+        axios.post(`/${props.state.user}/add-friend`, {username})
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => console.log(err));
+    }
     return (
         <div className={classes.FriendsPage}>
             <h1>Find Friends</h1>
@@ -25,8 +32,7 @@ const FindFriends = props => {
             <button type='button' className={classes.SearchButton}>Search</button>
             <ul>
             {friends.map((username, i) => {
-                            // onClick={addUser(username)}
-                return <li key={i} >{username}</li> 
+                return <li key={i} onClick={() => addUser(username)}>{username}</li> 
             })}
             </ul>
         </div>
