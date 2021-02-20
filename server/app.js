@@ -69,12 +69,27 @@ app.post('/signin', (req, res) => {
 })
 
 app.get('/find-friends', (req, res) => {
-    // const username = req.query.user;
-    db.query("SELECT username FROM users", (err, result) => {
+    const username = req.query.user;
+    db.query("SELECT u.username FROM users u LEFT JOIN friends f  ON u.user_id = f.user WHERE u.username != (SELECT f.friend FROM users u JOIN friends f ON u.user_id = f.user WHERE u.username = ?) AND u.username != ?", 
+    [username, username], (err, result) => {
         if (result) {
             res.send(result);
         }
         if (err) {
+            res.send({err: 'Error occured :('});
+        }
+    })
+})
+
+app.get('/your-friends', (req, res) => {
+    const username = req.query.user;
+    db.query("SELECT friends.friend FROM users JOIN friends ON users.user_id = friends.user WHERE users.username = ?", [username], (err, result) => {
+        if (result) {
+            console.log(result)
+            res.send(result);
+        }
+        if (err) {
+            console.log(err)
             res.send({err: 'Error occured :('});
         }
     })

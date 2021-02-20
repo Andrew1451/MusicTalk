@@ -9,14 +9,19 @@ const FindFriends = props => {
         axios.get('/find-friends', {params: {user: props.state.user}})
         .then(res => {
             let friendArray = [];
+            if (res.data.err) {
+                setError(res.data.err);
+                return
+            }
             res.data.forEach(friend => friendArray.push(friend.username));
             setFriends(friendArray);
+            setError(null);
         })
         .catch(err => console.log(err));
-    }, [props.state])
+    }, [props.state]);
+    const [error, setError] = useState(null);
     const [friends, setFriends] = useState([]);
     const addUser = username => {
-        console.log(`add user ${username}`)
         axios.post(`/${props.state.user}/add-friend`, {username})
         .then(res => {
             console.log(res)
@@ -35,6 +40,7 @@ const FindFriends = props => {
                 return <li key={i} onClick={() => addUser(username)}>{username}</li> 
             })}
             </ul>
+            { error ? <p className={classes.Error}>{error}</p> : null }
         </div>
     )
 }

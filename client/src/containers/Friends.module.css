@@ -66,6 +66,13 @@
     height: 1.7rem;
 }
 
+.Error {
+    text-align: center;
+    margin-top: 45px;
+    margin-bottom: 0;
+    color: red;
+}
+
 @media (min-width: 650px) {
     .FriendsPage {
         border: 2px solid #01b7ee;
