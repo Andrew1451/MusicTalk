@@ -20,11 +20,15 @@ const FindFriends = props => {
         .catch(err => console.log(err));
     }, [props.state]);
     const [error, setError] = useState(null);
+    const [added, setAdded] = useState([]);
     const [friends, setFriends] = useState([]);
-    const addUser = username => {
+    const addUser = (username, i) => {
+        console.log(username)
         axios.post(`/${props.state.user}/add-friend`, {username})
         .then(res => {
-            console.log(res)
+            if (res.data.added) {
+                setAdded([...added, i])
+            }
         })
         .catch(err => console.log(err));
     }
@@ -37,7 +41,11 @@ const FindFriends = props => {
             <button type='button' className={classes.SearchButton}>Search</button>
             <ul>
             {friends.map((username, i) => {
-                return <li key={i} onClick={() => addUser(username)}>{username}</li> 
+                if (added.includes(i)) {
+                    return <li style={{color: 'lime', cursor: 'default'}} key={i}>Added!</li>
+                } else {
+                    return <li key={i}  onClick={() => addUser(username, i)}>{username}</li>
+                }
             })}
             </ul>
             { error ? <p className={classes.Error}>{error}</p> : null }

@@ -70,12 +70,13 @@ app.post('/signin', (req, res) => {
 
 app.get('/find-friends', (req, res) => {
     const username = req.query.user;
-    db.query("SELECT u.username FROM users u LEFT JOIN friends f  ON u.user_id = f.user WHERE u.username != (SELECT f.friend FROM users u JOIN friends f ON u.user_id = f.user WHERE u.username = ?) AND u.username != ?", 
+    db.query("SELECT u.username FROM users u LEFT JOIN friends f ON u.user_id = f.user WHERE u.username NOT IN (SELECT f.friend FROM users u JOIN friends f ON u.user_id = f.user WHERE u.username = ?) AND u.username != ?", 
     [username, username], (err, result) => {
         if (result) {
             res.send(result);
         }
         if (err) {
+            console.log(err)
             res.send({err: 'Error occured :('});
         }
     })
@@ -101,10 +102,10 @@ app.post('/:id/add-friend', (req, res, next) => {
     db.query("INSERT INTO friends (friend, user) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
     [friend, user], (err, result) => {
         if (err) {
-            console.log(err);
+            res.send({err: 'Couldn\'t add friend.. So lonely..'})
         }
         if (result) {
-            console.log(result);
+            res.send({added: 'friend added!'})
         }
     })
 })
