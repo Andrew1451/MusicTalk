@@ -84,14 +84,13 @@ app.get('/find-friends', (req, res) => {
 
 app.get('/your-friends', (req, res) => {
     const username = req.query.user;
-    db.query("SELECT friends.friend FROM users JOIN friends ON users.user_id = friends.user WHERE users.username = ?", [username], (err, result) => {
+    db.query("SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)", 
+    [username], (err, result) => {
         if (result) {
-            console.log(result)
-            res.send(result);
+            res.send(result)
         }
         if (err) {
             console.log(err)
-            res.send({err: 'Error occured :('});
         }
     })
 })

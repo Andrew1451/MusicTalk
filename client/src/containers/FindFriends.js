@@ -23,7 +23,6 @@ const FindFriends = props => {
     const [added, setAdded] = useState([]);
     const [friends, setFriends] = useState([]);
     const addUser = (username, i) => {
-        console.log(username)
         axios.post(`/${props.state.user}/add-friend`, {username})
         .then(res => {
             if (res.data.added) {
