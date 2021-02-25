@@ -90,7 +90,7 @@ app.get('/your-friends', (req, res) => {
             res.send(result)
         }
         if (err) {
-            console.log(err)
+            res.send({err: 'Error occured :('})
         }
     })
 })
