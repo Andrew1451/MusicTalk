@@ -39,20 +39,25 @@
     font-size: 16px;
 }
 
-.Buttons {
+.Links {
     display: flex;
     justify-content: space-around;
     margin-bottom: 27px;
     margin-top: 17px;
 }
 
-.Buttons button {
+.Links a {
     padding: 1px 10px;
     font-size: .9rem;
     border-radius: 3px;
     color: #01b7ee;
     border: none;
     background-color: black;
+}
+
+.Links a:hover {
+    border-bottom: none;
+    color: #d4fd02;
 }
 
 .PostContainer {

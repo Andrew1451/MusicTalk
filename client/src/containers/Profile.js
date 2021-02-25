@@ -49,11 +49,11 @@ const Profile = props => {
                     {/* display friends or Find Friends button */}
                     {state.friends.length > 0 ? state.friends.map((friend, i) => {
                         return <NavLink to={`/friend/${friend}`} className={classes.Friend} key={i}>{friend}</NavLink>
-                    }) : <div className={classes.Buttons}><button type='button'>Find Friends</button></div>}
+                    }) : <div className={classes.Links}><NavLink to={'/find-friends'}>Find Friends</NavLink></div>}
                 </div>
-                <div className={classes.Buttons}>
-                    <button type='button'>View Friends</button>
-                    <button type='button'>Find Friends</button>
+                <div className={classes.Links}>
+                    <NavLink to={'/friends'}>View Friends</NavLink>
+                    <NavLink to={'/find-friends'}>Find Friends</NavLink>
                 </div>
             </section>
             <section>
