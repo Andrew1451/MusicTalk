@@ -70,7 +70,7 @@ app.post('/signin', (req, res) => {
 
 app.get('/find-friends', (req, res) => {
     const username = req.query.user;
-    db.query("SELECT u.username FROM users u LEFT JOIN friends f ON u.user_id = f.user WHERE u.username NOT IN (SELECT f.friend FROM users u JOIN friends f ON u.user_id = f.user WHERE u.username = ?) AND u.username != ?", 
+    db.query("SELECT u.username FROM users u WHERE u.username NOT IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)) AND u.username != ?", 
     [username, username], (err, result) => {
         if (result) {
             res.send(result);
