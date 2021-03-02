@@ -8,6 +8,19 @@
     margin-bottom: 1rem;
     font-size: .9rem;
     line-height: 1.2rem;
+    padding-top: 7px;
+}
+
+@keyframes outline {
+    from {outline-offset: 0;}
+    to {outline-offset: 8px;}
+  }
+
+textarea:focus {
+    outline: 1.6px solid #01b7ee;
+    animation-name: outline;
+    animation-duration: .2s;
+    animation-direction: alternate;
 }
 
 .PostButton {
