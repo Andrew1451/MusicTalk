@@ -95,7 +95,7 @@ app.get('/your-friends', (req, res) => {
     })
 })
 
-app.post('/:id/add-friend', (req, res, next) => {
+app.post('/:id/add-friend', (req, res) => {
     const friend = req.body.username;
     const user = req.params.id;
     db.query("INSERT INTO friends (friend, user) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
@@ -105,6 +105,21 @@ app.post('/:id/add-friend', (req, res, next) => {
         }
         if (result) {
             res.send({added: 'friend added!'})
+        }
+    })
+})
+
+app.post('/:id/add-post', (req, res) => {
+    const post = req.body.post;
+    const user = req.params.id;
+    db.query("INSERT INTO posts (post, post_author) values (?, (SELECT user_id FROM users WHERE username = ?))",
+    [post, user], (err, result) => {
+        if (err) {
+            res.send({err: 'Houston? We have a problem..'})
+        }
+        if (result) {
+            console.log(result);
+            res.send({post})
         }
     })
 })

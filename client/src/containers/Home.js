@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import Post from '../components/Post';
 import classes from './Home.module.css';
 
 const Home = props => {
-    const [post, setPost] = useState({
-        post: ''
-    })
+    const [post, setPost] = useState('');
 
     const placeholderPosts = [
         {
@@ -26,16 +26,17 @@ const Home = props => {
     ];
 
     const inputChangedHandler = e => {
-        const updatedInput = {
-            ...post,
-            [e.target.id]: e.target.value
-        }
-        setPost(updatedInput);
+        setPost(e.target.value)
     }
 
     const submitHandler = e => {
         e.preventDefault()
-        //todo - put into database
+        axios.post(`/${props.state.user}/add-post`, {post})
+        .then(res => {
+            console.log(res.data);
+            setPost('');
+        })
+        .catch(err => console.log(err));
     }
 
     return (
@@ -54,4 +55,10 @@ const Home = props => {
     )
 }
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        state
+    }
+}
+
+export default connect(mapStateToProps)(Home);
