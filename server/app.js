@@ -124,6 +124,19 @@ app.post('/:id/add-post', (req, res) => {
     })
 })
 
+app.get('/:id/posts', (req, res) => {
+    const user = req.params.id;
+    db.query("SELECT post, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?)",
+    [user], (err, result) => {
+        if (err) {
+            res.send({postErr: 'Couldn\'t get posts =/'})
+        }
+        if (result) {
+            res.send({posts: result})
+        }
+    })
+})
+
 app.listen(port, () => {
     console.log(`server running on port: ${port}`);
 })

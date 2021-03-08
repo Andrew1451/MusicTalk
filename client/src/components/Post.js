@@ -3,7 +3,8 @@ import classes from '../containers/Profile.module.css';
 
 const Post = props => {
     return (
-        <li key={props.id} className={classes.PostContainer}>
+        // {key={props.id}}
+        <li className={classes.PostContainer}>
             <div className={classes.PostName}>
                 <p>{props.username}</p>
             </div>

@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import classes from './Profile.module.css';
+import Post from '../components/Post';
 import * as actions from '../store/actions/index';
 
 const initialState = {
@@ -10,6 +11,12 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
+    if (action.type === 'fetchFriends') {
+        return {
+            ...state,
+            friends: []
+        }
+    }
     if (action.type === 'updateFriends') {
         const updatedFriends = [...state.friends];
         action.friends.forEach(friend => {
@@ -34,11 +41,25 @@ const Profile = props => {
         }
     });
     useEffect(() => {
+        dispatch({type: 'fetchFriends'})
         axios.get('/your-friends', {params: {user: props.state.user}})
         .then(res => {
             dispatch({type: 'updateFriends', friends: res.data})
         }).catch(err => console.log(err));
     }, [props.state.user]);
+    useEffect(() => {
+        axios.get(`/${props.state.user}/posts`)
+        .then(res => {
+            let postsArray = [];
+            console.log(res.data);
+            res.data.posts.forEach(post => {postsArray.push(post)});
+            console.log(postsArray)
+            setPosts(postsArray);
+        })
+        .catch(err => console.log(err))
+    }, [props.state.user])
+
+    const [posts, setPosts] = useState([]);
     
     return (
         <div className={classes.Profile}>
@@ -58,19 +79,11 @@ const Profile = props => {
             </section>
             <section>
                 <h3>Posts</h3>
-                <div className={classes.PostContainer}>
-                    <div className={classes.PostName}>
-                        <p>{props.state.user}</p>
-                    </div>
-                    <div className={classes.Post}>
-                        <p>Music - vocal or instrumental sounds combined in such a way as to produce beauty of form, 
-                            harmony, and expression of emotion.</p>
-                    </div>
-                    <div className={classes.LikeComment}>
-                        <div>Like</div>
-                        <div style={{borderRight: 'none'}}>Comment</div>
-                    </div>
-                </div>
+                <ul>
+                    {posts.map(post => {
+                        return <Post key={post.created_at} post={post.post} username={props.state.user} />
+                    })}
+                </ul>
             </section>
         </div>
     )
