@@ -80,9 +80,12 @@ const Profile = props => {
             <section>
                 <h3>Posts</h3>
                 <ul>
-                    {posts.map(post => {
+                    {posts.length > 0 ? posts.map(post => {
                         return <Post key={post.created_at} post={post.post} username={props.state.user} />
-                    })}
+                    }) : <ul className={classes.CreatePost}>
+                            <li><p>You have no posts.</p></li>
+                            <li><p><NavLink to={'/'}>Create one</NavLink></p></li>
+                         </ul>}
                 </ul>
             </section>
         </div>

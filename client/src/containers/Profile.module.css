@@ -18,6 +18,20 @@
     padding: 0;
 }
 
+.CreatePost {
+    color: white;
+    text-align: center;
+}
+
+.CreatePost a {
+    color: #d4fd02;
+}
+
+.CreatePost a:hover {
+    color: #01b7ee;
+    border: none;
+}
+
 .FriendsList {
     border: 1px solid white;
     width: 100%;
@@ -54,14 +68,14 @@
     padding: 1px 10px;
     font-size: .9rem;
     border-radius: 3px;
-    color: #01b7ee;
+    color: #d4fd02;
     border: none;
     background-color: black;
 }
 
 .Links a:hover {
     border-bottom: none;
-    color: #d4fd02;
+    color: #01b7ee;
 }
 
 .PostContainer {

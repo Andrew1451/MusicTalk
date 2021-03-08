@@ -42,7 +42,7 @@ const Home = props => {
     return (
         <div className={classes.HomePage}>
             <form onSubmit={submitHandler}>
-                <textarea id='post' rows='5' cols='40' placeholder='Write a post about music :)' onChange={inputChangedHandler}></textarea>
+                <textarea id='post' rows='5' cols='40' placeholder='Write a post about music :)' value={post} onChange={inputChangedHandler}></textarea>
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
