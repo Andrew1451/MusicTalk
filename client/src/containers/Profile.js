@@ -51,9 +51,7 @@ const Profile = props => {
         axios.get(`/${props.state.user}/posts`)
         .then(res => {
             let postsArray = [];
-            console.log(res.data);
             res.data.posts.forEach(post => {postsArray.push(post)});
-            console.log(postsArray)
             setPosts(postsArray);
         })
         .catch(err => console.log(err))

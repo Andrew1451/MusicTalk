@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Post from '../components/Post';
 import classes from './Home.module.css';
 
 const Home = props => {
+    useEffect(() => {
+        axios.get(`/${props.state.user}/all-posts`)
+        .then(res => {
+            let postsArray = [];
+            res.data.allPosts.forEach(post => {postsArray.push(post)});
+            setPosts(postsArray);
+        })
+    })
     const [post, setPost] = useState('');
+    const [posts, setPosts] = useState([]);
 
     const placeholderPosts = [
         {
@@ -33,7 +42,6 @@ const Home = props => {
         e.preventDefault()
         axios.post(`/${props.state.user}/add-post`, {post})
         .then(res => {
-            console.log(res.data);
             setPost('');
         })
         .catch(err => console.log(err));
@@ -47,6 +55,9 @@ const Home = props => {
             </form>
             <hr/>
             <ul>
+                {posts.map(post => {
+                    return <Post key={post.created_at} post={post.post} username={props.state.user} />
+                })}
                 {placeholderPosts.map(post => {
                     return <Post key={post.id} id={post.id} username={post.username} post={post.post} />
                 })}
