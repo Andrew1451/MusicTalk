@@ -6,15 +6,20 @@ import classes from './Home.module.css';
 
 const Home = props => {
     useEffect(() => {
-        axios.get(`/${props.state.user}/all-posts`)
-        .then(res => {
-            let postsArray = [];
-            res.data.allPosts.forEach(post => {postsArray.push(post)});
-            setPosts(postsArray);
-        })
-    })
+        if (props.state.user) {
+            axios.get(`/${props.state.user}/all-posts`)
+            .then(res => {
+                let postsArray = [];
+                res.data.allPosts.forEach(post => {postsArray.push(post)});
+                setPosts(postsArray);
+                setError(null);
+            })
+            .catch(err => setError('Had trouble grabbing posts =/'))
+        }
+    }, [props.state.user])
     const [post, setPost] = useState('');
     const [posts, setPosts] = useState([]);
+    const [error, setError] = useState(null);
 
     const placeholderPosts = [
         {
@@ -42,9 +47,11 @@ const Home = props => {
         e.preventDefault()
         axios.post(`/${props.state.user}/add-post`, {post})
         .then(res => {
-            setPost('');
+            setPosts(...posts, post)
+            setPost('')
+            setError(null)
         })
-        .catch(err => console.log(err));
+        .catch(err => setError('Couldn\'t submit post =/. Try again?'));
     }
 
     return (
@@ -54,6 +61,7 @@ const Home = props => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
+            <p className={classes.Error}>{error}</p>
             <ul>
                 {posts.map(post => {
                     return <Post key={post.created_at} post={post.post} username={props.state.user} />
