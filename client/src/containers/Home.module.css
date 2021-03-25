@@ -11,6 +11,39 @@
     padding-top: 7px;
 }
 
+.WelcomePage h1 {
+    color: white;
+    font-size: 43px;
+    margin: 68px;
+    text-align: center;
+}
+
+.WelcomePage span {
+    color: #01b7ee;
+}
+
+.WelcomePage ul {
+    list-style-type: disc;
+    margin-left: 18px;
+    margin-bottom: 64px;
+    width: 84%;
+}
+
+.WelcomePage li {
+    color: white;
+    margin-bottom: 32px;
+}
+
+.WelcomePage p {
+    color: white;
+    text-align: center;
+}
+
+.WelcomePage a {
+    margin: 17px;
+    color: #d4fd02;
+}
+
 .Error {
     color: red;
     text-align: center;
@@ -56,6 +89,17 @@ textarea:focus {
         padding: 90px;
         padding-top: 41px;
         padding: 41px 90px;
+    }
+    .WelcomePage {
+        width: 30rem;
+        margin: 4rem auto;
+        border: 2px solid #01b7ee;
+        padding: 90px;
+        padding-top: 41px;
+        padding: 41px 90px;
+    }
+    .WelcomePage h1 {
+        margin-top: 37px;
     }
     .HomePage ul {
         padding: 0;

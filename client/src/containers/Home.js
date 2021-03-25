@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Post from '../components/Post';
@@ -52,6 +53,20 @@ const Home = props => {
             setError(null)
         })
         .catch(err => setError('Couldn\'t submit post =/. Try again?'));
+    }
+
+    if (!props.state.user) {
+        return (
+            <div className={classes.WelcomePage}>
+                <h1><span>M</span>usic<span>T</span>alk</h1>
+                <ul>
+                    <li>An app similar to Facebook, but it's all about <span>music</span>.</li>
+                    <li>Make posts and follow friends to see their posts.</li>
+                    <li>No ads, no politics, and it's <span>free</span>.</li>
+                </ul>
+                <p><NavLink to={'/sign-up'}>SignUp!</NavLink> or <NavLink to={'/sign-in'}>SignIn!</NavLink></p>
+            </div>
+        )
     }
 
     return (
