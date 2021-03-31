@@ -2,8 +2,10 @@ import React from 'react';
 import classes from '../containers/Profile.module.css';
 
 const Post = props => {
+    const likePost = () => {
+        
+    }
     return (
-        // {key={props.id}}
         <li className={classes.PostContainer}>
             <div className={classes.PostName}>
                 <p>{props.username}</p>
@@ -12,7 +14,7 @@ const Post = props => {
                 <p>{props.post}</p>
             </div>
             <div className={classes.LikeComment}>
-                <div>Like</div>
+                <div onClick={likePost}>Like</div>
                 <div style={{borderRight: 'none'}}>Comment</div>
             </div>
         </li>

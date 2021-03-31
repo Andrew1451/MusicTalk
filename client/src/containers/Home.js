@@ -11,7 +11,7 @@ const Home = props => {
             axios.get(`/${props.state.user}/all-posts`)
             .then(res => {
                 let postsArray = [];
-                res.data.allPosts.forEach(post => {postsArray.push(post)});
+                res.data.allPosts.forEach(post => postsArray.push(post));
                 setPosts(postsArray);
                 setError(null);
             })
@@ -79,7 +79,7 @@ const Home = props => {
             <p className={classes.Error}>{error}</p>
             <ul>
                 {posts.map(post => {
-                    return <Post key={post.created_at} post={post.post} username={props.state.user} />
+                    return <Post key={post.post_id} postid={post.post_id} post={post.post} username={post.username} user={props.state.user} />
                 })}
                 {placeholderPosts.map(post => {
                     return <Post key={post.id} id={post.id} username={post.username} post={post.post} />

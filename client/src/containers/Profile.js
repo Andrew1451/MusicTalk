@@ -51,7 +51,10 @@ const Profile = props => {
         axios.get(`/${props.state.user}/posts`)
         .then(res => {
             let postsArray = [];
-            res.data.posts.forEach(post => {postsArray.push(post)});
+            res.data.posts.forEach(post => {
+                console.log(post)
+                postsArray.push(post)
+            });
             setPosts(postsArray);
         })
         .catch(err => console.log(err))
@@ -79,7 +82,7 @@ const Profile = props => {
                 <h3>Posts</h3>
                 <ul>
                     {posts.length > 0 ? posts.map(post => {
-                        return <Post key={post.created_at} post={post.post} username={props.state.user} />
+                        return <Post key={post.created_at} postid={post.post_id} post={post.post} username={props.state.user} />
                     }) : <ul className={classes.CreatePost}>
                             <li><p>You have no posts.</p></li>
                             <li><p><NavLink to={'/'}>Create one</NavLink></p></li>

@@ -125,20 +125,36 @@ app.post('/:id/add-post', (req, res) => {
 
 app.get('/:id/posts', (req, res) => {
     const user = req.params.id;
-    db.query("SELECT post, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?)",
+    db.query("SELECT post, post_id, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?)",
     [user], (err, result) => {
         if (err) {
             res.send({postErr: 'Couldn\'t get posts =/'})
         }
         if (result) {
-            res.send({posts: result})
-        }
+            const posts = result;
+            db.query("SELECT liked_post FROM likes WHERE user_id = (SELECT user_id FROM users WHERE username = ?)",
+            [user], (err, result) => {
+                if (err) {
+                    res.send({postErr: 'Couldn\'t get posts =/'})
+                }
+                if (result) {
+                    posts.forEach(post => {
+                        if (result.includes(post.post_id)) {
+                            post['liked'] = true;
+                        } else {
+                            post['liked'] = false;
+                        }
+                    })
+                    res.send({posts})
+                }
+            }
+        )}
     })
 })
 
 app.get('/:id/all-posts', (req, res) => {
     const user = req.params.id;
-    db.query("SELECT DISTINCT p.post, p.created_at, u.username FROM posts p INNER JOIN users u ON p.post_author = u.user_id INNER JOIN friends f ON p.post_author = f.user WHERE p.post_author IN (SELECT u.user_id FROM users u INNER JOIN friends f ON u.user_id = f.user WHERE f.friend IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)))", 
+    db.query("SELECT DISTINCT p.post, p.post_id, p.created_at, u.username FROM posts p INNER JOIN users u ON p.post_author = u.user_id INNER JOIN friends f ON p.post_author = f.user WHERE p.post_author IN (SELECT u.user_id FROM users u INNER JOIN friends f ON u.user_id = f.user WHERE f.friend IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)))", 
     [user], (err, result) => {
         if (err) {
             res.send({postsErr: 'Couldn\'t get posts =/'})
