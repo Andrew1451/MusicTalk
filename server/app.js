@@ -139,11 +139,7 @@ app.get('/:id/posts', (req, res) => {
                 }
                 if (result) {
                     posts.forEach(post => {
-                        if (result.includes(post.post_id)) {
-                            post['liked'] = true;
-                        } else {
-                            post['liked'] = false;
-                        }
+                        result.includes(post.post_id) ? post['liked'] = true : post['liked'] = false;
                     })
                     res.send({posts})
                 }
@@ -160,8 +156,20 @@ app.get('/:id/all-posts', (req, res) => {
             res.send({postsErr: 'Couldn\'t get posts =/'})
         }
         if (result) {
-            res.send({allPosts: result})
-        }
+            const allPosts = result;
+            db.query("SELECT liked_post FROM likes WHERE user_id = (SELECT user_id FROM users WHERE username = ?)",
+            [user], (err, result) => {
+                if (err) {
+                    res.send({postsErr: 'Couldn\'t get posts =/'})
+                }
+                if (result) {
+                    allPosts.forEach(post => {
+                        result.includes(post.post_id) ? post['liked'] = true : post['liked'] = false;
+                    })
+                    res.send({allPosts})
+                }
+            }
+        )}
     })
 })
 
