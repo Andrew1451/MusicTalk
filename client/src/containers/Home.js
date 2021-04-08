@@ -80,7 +80,7 @@ const Home = props => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
-            <p className={classes.Error}>{error}</p>
+            { error ? <p className={classes.Error}>{error}</p> : null }
             <ul>
                 {posts.map(post => {
                     return <Post key={post.post_id} 

@@ -1,4 +1,10 @@
+.HomePage {
+    width: 84%;
+    margin: auto;
+}
+
 .HomePage form {
+    width: 100%;
     margin: 1rem auto;
 }
 
@@ -65,7 +71,7 @@ textarea:focus {
 .PostButton {
     display: block;
     margin-left: 2rem;
-    width: 18.8rem;
+    width: 100%;
     background-color: #01b7ee;
     border: none;
     border-radius: 4px;
@@ -78,7 +84,10 @@ textarea:focus {
 }
 
 .HomePage ul {
-    width: 20.8rem;
+    width: 100%;
+    display: block;
+    margin: auto;
+    padding: 0;
 }
 
 @media (min-width: 650px) {
