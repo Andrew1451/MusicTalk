@@ -16,7 +16,7 @@ const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: process.env.DATABASE_PASSWORD,
-    database: 'MusicTalkDatabase'
+    database: 'MusicTalk'
 })
 
 app.use(cookieParser());
@@ -118,7 +118,7 @@ app.post('/:id/add-post', (req, res) => {
             res.send({err: 'Houston? We have a problem..'})
         }
         if (result) {
-            res.send({post})
+            res.send({result})
         }
     })
 })
@@ -170,6 +170,21 @@ app.get('/:id/all-posts', (req, res) => {
                 }
             }
         )}
+    })
+})
+
+app.post('/:id/like', (req, res) => {
+    const postid = req.body.postId;
+    const user = req.params.id;
+    db.query("INSERT INTO likes (liked_post, user_id) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
+    [postid, user], (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        if (result) {
+            console.log(result);
+            res.send({liked: true})
+        }
     })
 })
 

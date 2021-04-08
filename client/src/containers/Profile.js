@@ -52,7 +52,6 @@ const Profile = props => {
         .then(res => {
             let postsArray = [];
             res.data.posts.forEach(post => {
-                console.log(post)
                 postsArray.push(post)
             });
             setPosts(postsArray);
@@ -79,10 +78,15 @@ const Profile = props => {
                 </div>
             </section>
             <section>
-                <h3>Posts</h3>
+                <h3>Your Posts</h3>
                 <ul>
                     {posts.length > 0 ? posts.map(post => {
-                        return <Post key={post.created_at} postid={post.post_id} post={post.post} username={props.state.user} />
+                        return <Post key={post.created_at} 
+                                    postid={post.post_id} 
+                                    post={post.post} 
+                                    user={props.state.user} 
+                                    username={props.state.user}
+                                    liked={post.liked} />
                     }) : <ul className={classes.CreatePost}>
                             <li><p>You have no posts.</p></li>
                             <li><p><NavLink to={'/'}>Create one</NavLink></p></li>

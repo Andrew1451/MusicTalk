@@ -7,8 +7,9 @@ import classes from './Home.module.css';
 
 const Home = props => {
     useEffect(() => {
+        const source = axios.CancelToken.source();
         if (props.state.user) {
-            axios.get(`/${props.state.user}/all-posts`)
+            axios.get(`/${props.state.user}/all-posts`, {cancelToken: source.token})
             .then(res => {
                 let postsArray = [];
                 res.data.allPosts.forEach(post => postsArray.push(post));
@@ -17,6 +18,9 @@ const Home = props => {
             })
             .catch(err => setError('Had trouble grabbing posts =/'))
         }
+        return () => {
+            source.cancel();
+        };
     }, [props.state.user])
     const [post, setPost] = useState('');
     const [posts, setPosts] = useState([]);
@@ -24,17 +28,17 @@ const Home = props => {
 
     const placeholderPosts = [
         {
-            id: 1, 
+            id: 'a', 
             username: 'LooneyTunes', 
             post: 'I think we can all agree that music is amazing'
         },
         {
-            id: 2, 
+            id: 'b', 
             username: 'OfficialMozart', 
-            post: 'I really am the official Mozart. I\'m not making this up. I\'m definitely alive'
+            post: 'I really am the official Mozart. I\'m not making this up. I\'m definitely alive.'
         },
         {
-            id: 3, 
+            id: 'c', 
             username: 'addictedtomusicc', 
             post: 'Music - vocal or instrumental sounds combined in such a way as to produce beauty of form, harmony, and expression of emotion.'
         }
@@ -48,7 +52,7 @@ const Home = props => {
         e.preventDefault()
         axios.post(`/${props.state.user}/add-post`, {post})
         .then(res => {
-            setPosts(...posts, post)
+            setPosts([...posts, {post: post, post_id: res.data.insertId, username: props.state.user, liked: false}])
             setPost('')
             setError(null)
         })
@@ -79,7 +83,12 @@ const Home = props => {
             <p className={classes.Error}>{error}</p>
             <ul>
                 {posts.map(post => {
-                    return <Post key={post.post_id} postid={post.post_id} post={post.post} username={post.username} user={props.state.user} />
+                    return <Post key={post.post_id} 
+                                postid={post.post_id} 
+                                post={post.post} 
+                                username={post.username} 
+                                user={props.state.user} 
+                                liked={post.liked} />
                 })}
                 {placeholderPosts.map(post => {
                     return <Post key={post.id} id={post.id} username={post.username} post={post.post} />
