@@ -150,12 +150,18 @@ app.get('/:id/posts', (req, res) => {
 
 app.get('/:id/all-posts', (req, res) => {
     const user = req.params.id;
-    db.query("SELECT DISTINCT p.post, p.post_id, p.created_at, u.username FROM posts p INNER JOIN users u ON p.post_author = u.user_id INNER JOIN friends f ON p.post_author = f.user WHERE p.post_author IN (SELECT u.user_id FROM users u INNER JOIN friends f ON u.user_id = f.user WHERE f.friend IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)))", 
-    [user], (err, result) => {
+    db.query(`SELECT p.post, p.post_author, p.created_at, p.post_id, u.username FROM posts p 
+        INNER JOIN users u ON p.post_author = u.user_id WHERE p.post_author IN (
+        SELECT u.user_id FROM users u WHERE u.username IN (SELECT f.friend FROM friends f WHERE f.user = (
+        SELECT u.user_id FROM users u WHERE u.username = ?))) OR p.post_author = (
+        SELECT u.user_id FROM users u WHERE username = ?) ORDER BY p.created_at DESC`, 
+    [user, user], (err, result) => {
         if (err) {
+            console.log(err)
             res.send({postsErr: 'Couldn\'t get posts =/'})
         }
         if (result) {
+            console.log(result)
             const allPosts = result;
             db.query("SELECT liked_post FROM likes WHERE user_id = (SELECT user_id FROM users WHERE username = ?)",
             [user], (err, result) => {

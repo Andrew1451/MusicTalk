@@ -11,6 +11,7 @@ const Home = props => {
         if (props.state.user) {
             axios.get(`/${props.state.user}/all-posts`, {cancelToken: source.token})
             .then(res => {
+                console.log(res)
                 let postsArray = [];
                 res.data.allPosts.forEach(post => postsArray.push(post));
                 setPosts(postsArray);
