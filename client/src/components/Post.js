@@ -23,7 +23,7 @@ const Post = props => {
                     <p>{props.post}</p>
                 </div>
                 <div className={classes.LikeComment}>
-                    {props.liked ? <div style={{color: 'green'}}>Liked!</div> : <div onClick={likePost}>Like</div>}
+                    {props.liked ? <div style={{color: 'lime'}}>Liked!</div> : <div onClick={likePost}>Like</div>}
                     <div style={{borderRight: 'none'}}>Comment</div>
                 </div>
             </li>
