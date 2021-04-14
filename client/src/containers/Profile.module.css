@@ -71,17 +71,15 @@
 }
 
 .Links a {
-    padding: 1px 10px;
+    margin: 1px 10px;
     font-size: .9rem;
-    border-radius: 3px;
     color: #d4fd02;
-    border: none;
+    border-bottom: 1px solid black;
     background-color: black;
 }
 
 .Links a:hover {
-    border-bottom: none;
-    color: #01b7ee;
+    border-bottom: 1px solid lime;
 }
 
 .PostContainer {
