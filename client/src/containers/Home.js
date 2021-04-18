@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import * as actions from '../store/actions/index';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Post from '../components/Post';
 import classes from './Home.module.css';
 
-const Home = props => {
+const Home = ({ user, onFetchAllPosts, allPosts }) => {
     useEffect(() => {
-        const source = axios.CancelToken.source();
-        if (props.state.user) {
-            axios.get(`/${props.state.user}/all-posts`, {cancelToken: source.token})
-            .then(res => {
-                console.log(res)
-                let postsArray = [];
-                res.data.allPosts.forEach(post => postsArray.push(post));
-                setPosts(postsArray);
-                setError(null);
-            })
-            .catch(err => setError('Had trouble grabbing posts =/'))
+        if (user) {
+            onFetchAllPosts(user)
         }
-        return () => {
-            source.cancel();
-        };
-    }, [props.state.user])
+    }, [user, onFetchAllPosts])
+
     const [post, setPost] = useState('');
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
@@ -51,16 +41,16 @@ const Home = props => {
 
     const submitHandler = e => {
         e.preventDefault()
-        axios.post(`/${props.state.user}/add-post`, {post})
+        axios.post(`/${user}/add-post`, {post})
         .then(res => {
-            setPosts([...posts, {post: post, post_id: res.data.insertId, username: props.state.user, liked: false}])
+            setPosts([...posts, {post: post, post_id: res.data.insertId, username: user, liked: false}])
             setPost('')
             setError(null)
         })
         .catch(err => setError('Couldn\'t submit post =/. Try again?'));
     }
 
-    if (!props.state.user) {
+    if (!user) {
         return (
             <div className={classes.WelcomePage}>
                 <h1><span>M</span>usic<span>T</span>alk</h1>
@@ -83,12 +73,12 @@ const Home = props => {
             <hr/>
             { error ? <p className={classes.Error}>{error}</p> : null }
             <ul>
-                {posts.map(post => {
+                {allPosts.map(post => {
                     return <Post key={post.post_id} 
                                 postid={post.post_id} 
                                 post={post.post} 
                                 username={post.username} 
-                                user={props.state.user} 
+                                user={user} 
                                 liked={post.liked} />
                 })}
                 {placeholderPosts.map(post => {
@@ -101,8 +91,15 @@ const Home = props => {
 
 const mapStateToProps = state => {
     return {
-        state
+        user: state.auth.user,
+        allPosts: state.posts.allPosts
     }
 }
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchAllPosts: (user) => dispatch(actions.fetchAllPosts(user))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

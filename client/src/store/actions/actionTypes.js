@@ -9,3 +9,6 @@ export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const LOGIN = 'LOGIN';
 
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+
+export const ALL_POSTS_SUCCESS = 'ALL_POSTS_SUCCESS';
+export const ALL_POSTS_FAIL = 'ALL_POSTS_FAIL';

@@ -32,7 +32,7 @@ const Friends = props => {
 
 const mapStateToProps = state => {
     return {
-        state
+        state: state.auth
     }
 }
 

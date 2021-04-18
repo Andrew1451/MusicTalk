@@ -54,7 +54,7 @@ const FindFriends = props => {
 
 const mapStateToProps = state => {
     return {
-        state
+        state: state.auth
     }
 }
 

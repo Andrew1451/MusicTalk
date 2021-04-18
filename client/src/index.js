@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react'
 import storage from 'redux-persist/lib/storage';
@@ -10,7 +10,8 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import reducer from './store/reducers/auth';
+import authReducer from './store/reducers/auth';
+import postsReducer from './store/reducers/posts';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -18,8 +19,13 @@ const persistConfig = {
   key: 'root',
   storage,
 }
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  posts: postsReducer
+})
  
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 let persistor = persistStore(store)
 

@@ -10,6 +10,7 @@ const Post = props => {
             props.liked = true;
             setError(null);
         } catch (err) {
+            console.log(err)
             setError('Couldn\'t like post :(')
         }
     }
