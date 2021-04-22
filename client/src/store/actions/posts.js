@@ -15,6 +15,15 @@ export const allPostsFail = errorMessage => {
     }
 }
 
+export const likePost = (user, postid) => {
+    return dispatch => {
+        axios.post(`/${user}/like`, {postId: postid})
+        .then(res => {
+            // likePostSuccess(postid)
+        })
+    }
+}
+
 export const fetchAllPosts = user => {
     return dispatch => {
         axios.get(`/${user}/all-posts`)

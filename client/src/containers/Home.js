@@ -6,7 +6,7 @@ import axios from 'axios';
 import Post from '../components/Post';
 import classes from './Home.module.css';
 
-const Home = ({ user, onFetchAllPosts, allPosts }) => {
+const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
     useEffect(() => {
         if (user) {
             onFetchAllPosts(user)
@@ -71,7 +71,8 @@ const Home = ({ user, onFetchAllPosts, allPosts }) => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
-            { error ? <p className={classes.Error}>{error}</p> : null }
+            { error && <p className={classes.Error}>{error}</p> }
+            { err && <p className={classes.Error}>{err}</p> }
             <ul>
                 {allPosts.map(post => {
                     return <Post key={post.post_id} 
@@ -92,7 +93,8 @@ const Home = ({ user, onFetchAllPosts, allPosts }) => {
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
-        allPosts: state.posts.allPosts
+        allPosts: state.posts.allPosts,
+        err: state.posts.postsError
     }
 }
 

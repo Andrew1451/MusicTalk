@@ -9,14 +9,16 @@ const initialState = {
 const allPostsSuccess = (state, action) => {
     return {
         ...state,
-        allPosts: action.posts
+        allPosts: action.posts,
+        postsError: null
     }
 }
 
 const allPostsFail = (state, action) => {
     return {
         ...state,
-        postsError: action.error
+        allPosts: [],
+        postsError: action.allPostsError
     }
 }
 

@@ -13,7 +13,6 @@ import reportWebVitals from './reportWebVitals';
 import authReducer from './store/reducers/auth';
 import postsReducer from './store/reducers/posts';
 
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const persistConfig = {
   key: 'root',
@@ -24,8 +23,9 @@ const rootReducer = combineReducers({
   auth: authReducer,
   posts: postsReducer
 })
- 
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 let persistor = persistStore(store)
 

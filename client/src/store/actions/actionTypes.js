@@ -12,3 +12,5 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const ALL_POSTS_SUCCESS = 'ALL_POSTS_SUCCESS';
 export const ALL_POSTS_FAIL = 'ALL_POSTS_FAIL';
+
+export const LIKE_POST = 'LIKE_POST';
