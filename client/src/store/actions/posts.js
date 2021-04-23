@@ -15,12 +15,20 @@ export const allPostsFail = errorMessage => {
     }
 }
 
+export const likePostSuccess = postid => {
+    return {
+        type: actionTypes.LIKE_POST_SUCCESS,
+        postid
+    }
+}
+
 export const likePost = (user, postid) => {
     return dispatch => {
         axios.post(`/${user}/like`, {postId: postid})
         .then(res => {
-            // likePostSuccess(postid)
+            dispatch(likePostSuccess(postid))
         })
+        .catch(err => console.log(err))
     }
 }
 

@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actions from '../store/actions/index';
 import classes from '../containers/Profile.module.css';
 
 const Post = props => {
-    const [error, setError] = useState(null);
-    const likePost = async () => {
-        try {
-            await axios.post(`/${props.user}/like`, {postId: props.postid})
-            props.liked = true;
-            setError(null);
-        } catch (err) {
-            console.log(err)
-            setError('Couldn\'t like post :(')
-        }
-    }
+    
     return (
         <>
             <li className={classes.PostContainer}>
@@ -24,13 +14,26 @@ const Post = props => {
                     <p>{props.post}</p>
                 </div>
                 <div className={classes.LikeComment}>
-                    {props.liked ? <div style={{color: 'lime'}}>Liked!</div> : <div onClick={likePost}>Like</div>}
+                    {props.liked ? <div style={{color: 'lime'}}>Liked!</div> : <div onClick={() => props.onLikePost(props.user, props.postid)}>Like</div>}
                     <div style={{borderRight: 'none'}}>Comment</div>
                 </div>
             </li>
-            {error ? <p className={classes.LikeError}>{error}</p> : null}
+            {/* TODO: need redux error instead of local useState error */}
+            {/* {props.error ? <p className={classes.LikeError}>{props.error}</p> : null} */}
         </>
     )
 }
 
-export default Post;
+const mapStateToProps = state => {
+    return {
+        error: state.posts.postsError
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLikePost: (user, postid) => dispatch(actions.likePost(user, postid))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
