@@ -22,13 +22,27 @@ export const likePostSuccess = postid => {
     }
 }
 
+export const likePostFail = postid => {
+    return {
+        type: actionTypes.LIKE_POST_FAIL,
+        postid
+    }
+}
+
 export const likePost = (user, postid) => {
     return dispatch => {
         axios.post(`/${user}/like`, {postId: postid})
         .then(res => {
-            dispatch(likePostSuccess(postid))
+            if (res.data.liked) {
+                dispatch(likePostSuccess(postid))
+            }
+            if (res.data.error) {
+                dispatch(likePostFail(postid))
+            }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            dispatch(likePostFail(postid))
+        })
     }
 }
 

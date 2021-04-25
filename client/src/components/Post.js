@@ -19,14 +19,14 @@ const Post = props => {
                 </div>
             </li>
             {/* TODO: need redux error instead of local useState error */}
-            {/* {props.error ? <p className={classes.LikeError}>{props.error}</p> : null} */}
+            {props.likeErr ? <p className={classes.LikeError}>{props.likeErr}</p> : null}
         </>
     )
 }
 
 const mapStateToProps = state => {
     return {
-        error: state.posts.postsError
+        postErr: state.posts.postsError
     }
 }
 

@@ -169,6 +169,7 @@ app.get('/:id/all-posts', (req, res) => {
                 if (result) {
                     const likes = result.map(like => like['liked_post'])
                     allPosts.forEach(post => {
+                        post['likeError'] = null;
                         likes.includes(post.post_id) ? post['liked'] = true : post['liked'] = false;
                     })
                     res.send({allPosts})
@@ -184,7 +185,7 @@ app.post('/:id/like', (req, res) => {
     db.query("INSERT INTO likes (liked_post, user_id) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
     [postid, user], (err, result) => {
         if (err) {
-            console.log(err)
+            res.send({error: 'Couldn\'t like post =/'})
         }
         if (result) {
             console.log(result);

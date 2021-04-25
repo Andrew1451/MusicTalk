@@ -80,6 +80,7 @@ const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
                                 post={post.post} 
                                 username={post.username} 
                                 user={user} 
+                                likeErr={post.likeError}
                                 liked={post.liked} />
                 })}
                 {placeholderPosts.map(post => {
