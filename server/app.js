@@ -53,7 +53,7 @@ app.post('/signin', (req, res) => {
     const password = req.body.password;
     db.query("SELECT * FROM users WHERE username = ?",
     [username], (err, result) => {
-        if (!result[0]) {
+        if (!result) {
             res.send({err: 'username doesn\'t exist :('})
         } else {
             bcrypt.compare(password, result[0].password, (err, match) => {
@@ -157,6 +157,7 @@ app.get('/:id/all-posts', (req, res) => {
         SELECT u.user_id FROM users u WHERE username = ?) ORDER BY p.created_at DESC`, 
     [user, user], (err, result) => {
         if (err) {
+            console.log(err)
             res.send({postsErr: 'Couldn\'t get posts =/'})
         }
         if (result) {
@@ -164,6 +165,7 @@ app.get('/:id/all-posts', (req, res) => {
             db.query("SELECT likes.liked_post FROM likes WHERE user_id = (SELECT u.user_id FROM users u WHERE username = ?)",
             [user], (err, result) => {
                 if (err) {
+                    console.log(err)
                     res.send({postsErr: 'Couldn\'t get posts =/'})
                 }
                 if (result) {

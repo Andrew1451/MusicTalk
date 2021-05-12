@@ -18,7 +18,6 @@ const Post = props => {
                     <div style={{borderRight: 'none'}}>Comment</div>
                 </div>
             </li>
-            {/* TODO: need redux error instead of local useState error */}
             {props.likeErr ? <p className={classes.LikeError}>{props.likeErr}</p> : null}
         </>
     )

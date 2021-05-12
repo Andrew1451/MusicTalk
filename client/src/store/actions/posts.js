@@ -29,6 +29,12 @@ export const likePostFail = postid => {
     }
 }
 
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
 export const likePost = (user, postid) => {
     return dispatch => {
         axios.post(`/${user}/like`, {postId: postid})
@@ -50,9 +56,14 @@ export const fetchAllPosts = user => {
     return dispatch => {
         axios.get(`/${user}/all-posts`)
         .then(res => {
-            let posts = [];
-            res.data.allPosts.forEach(post => posts.push(post));
-            dispatch(allPostsSuccess(posts));
+            if (res.data.allPosts) {
+                let posts = [];
+                res.data.allPosts.forEach(post => posts.push(post));
+                dispatch(allPostsSuccess(posts));
+            }
+            if (res.data.postsErr) {
+                dispatch(allPostsFail(`Had trouble grabbing posts =/`))
+            }
         })
         .catch(err => {
             dispatch(allPostsFail(`Had trouble grabbing posts =/`))

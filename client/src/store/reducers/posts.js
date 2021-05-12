@@ -53,12 +53,22 @@ const likePostFail = (state, action) => {
     }
 }
 
+const logout = (state, action) => {
+    return {
+        ...state,
+        allPosts: [],
+        userPosts: [],
+        postsError: null
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ALL_POSTS_SUCCESS: return allPostsSuccess(state, action);
         case actionTypes.ALL_POSTS_FAIL: return allPostsFail(state, action);
         case actionTypes.LIKE_POST_SUCCESS: return likePostSuccess(state, action);
         case actionTypes.LIKE_POST_FAIL: return likePostFail(state, action);
+        case actionTypes.AUTH_LOGOUT: return logout(state, action);
         default: return state;
     }
 }
