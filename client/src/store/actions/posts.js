@@ -52,6 +52,13 @@ export const likePost = (user, postid) => {
     }
 }
 
+export const submitPostSuccess = addedPost => {
+    return {
+        type: actionTypes.SUBMIT_POST_SUCCESS,
+        addedPost
+    }
+}
+
 export const fetchAllPosts = user => {
     return dispatch => {
         axios.get(`/${user}/all-posts`)
@@ -68,5 +75,16 @@ export const fetchAllPosts = user => {
         .catch(err => {
             dispatch(allPostsFail(`Had trouble grabbing posts =/`))
         })
+    }
+}
+
+export const submitPost = (user, post) => {
+    return dispatch => {
+        axios.post(`/${user}/add-post`, {post})
+        .then(res => {
+            const addedPost = { post: post, post_id: res.data.insertId, username: user, liked: false }
+            dispatch(submitPostSuccess(addedPost))
+        })
+        // .catch(err => setError('Couldn\'t submit post =/. Try again?'));
     }
 }

@@ -56,8 +56,6 @@ export const login = () => {
 }
 
 export const signin = (username, password) => {
-    console.log(username)
-    console.log(password)
     return dispatch => {
         dispatch(signinStart());
         axios.post('/signin', {username, password})

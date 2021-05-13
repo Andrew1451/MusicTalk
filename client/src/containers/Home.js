@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import * as actions from '../store/actions/index';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import Post from '../components/Post';
 import classes from './Home.module.css';
 
-const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
+const Home = ({ user, onFetchAllPosts, onSubmitPost, allPosts, err }) => {
     useEffect(() => {
         if (user) {
             onFetchAllPosts(user)
@@ -14,8 +13,6 @@ const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
     }, [user, onFetchAllPosts])
 
     const [post, setPost] = useState('');
-    const [posts, setPosts] = useState([]);
-    const [error, setError] = useState(null);
 
     const placeholderPosts = [
         {
@@ -41,13 +38,16 @@ const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
 
     const submitHandler = e => {
         e.preventDefault()
-        axios.post(`/${user}/add-post`, {post})
-        .then(res => {
-            setPosts([...posts, {post: post, post_id: res.data.insertId, username: user, liked: false}])
-            setPost('')
-            setError(null)
-        })
-        .catch(err => setError('Couldn\'t submit post =/. Try again?'));
+        onSubmitPost(user, post)
+        setPost('')
+        // TODO: handle error
+        // axios.post(`/${user}/add-post`, {post})
+        // .then(res => {
+        //     setPosts([...posts, {post: post, post_id: res.data.insertId, username: user, liked: false}])
+        //     setPost('')
+        //     setError(null)
+        // })
+        // .catch(err => setError('Couldn\'t submit post =/. Try again?'));
     }
 
     if (!user) {
@@ -71,7 +71,7 @@ const Home = ({ user, onFetchAllPosts, allPosts, err }) => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
-            { error && <p className={classes.Error}>{error}</p> }
+            {/* { error && <p className={classes.Error}>{error}</p> } */}
             { err && <p className={classes.Error}>{err}</p> }
             <ul>
                 {allPosts.map(post => {
@@ -101,7 +101,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchAllPosts: (user) => dispatch(actions.fetchAllPosts(user))
+        onFetchAllPosts: (user) => dispatch(actions.fetchAllPosts(user)),
+        onSubmitPost: (user, post) => dispatch(actions.submitPost(user, post))
     }
 }
 

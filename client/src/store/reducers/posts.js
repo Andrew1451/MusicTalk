@@ -62,6 +62,15 @@ const logout = (state, action) => {
     }
 }
 
+const submitPostSuccess = (state, action) => {
+    return {
+        ...state,
+        allPosts: [action.addedPost, ...state.allPosts],
+        userPosts: [action.addedPost, ...state.userPosts],
+        postsError: null
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ALL_POSTS_SUCCESS: return allPostsSuccess(state, action);
@@ -69,6 +78,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LIKE_POST_SUCCESS: return likePostSuccess(state, action);
         case actionTypes.LIKE_POST_FAIL: return likePostFail(state, action);
         case actionTypes.AUTH_LOGOUT: return logout(state, action);
+        case actionTypes.SUBMIT_POST_SUCCESS: return submitPostSuccess(state, action);
         default: return state;
     }
 }
