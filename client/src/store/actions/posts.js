@@ -59,6 +59,13 @@ export const submitPostSuccess = addedPost => {
     }
 }
 
+export const submitPostFail = error => {
+    return {
+        type: actionTypes.SUBMIT_POST_FAIL,
+        error
+    }
+}
+
 export const fetchAllPosts = user => {
     return dispatch => {
         axios.get(`/${user}/all-posts`)
@@ -82,9 +89,14 @@ export const submitPost = (user, post) => {
     return dispatch => {
         axios.post(`/${user}/add-post`, {post})
         .then(res => {
-            const addedPost = { post: post, post_id: res.data.insertId, username: user, liked: false }
-            dispatch(submitPostSuccess(addedPost))
+            if (res.data.result) {
+                const addedPost = { post: post, post_id: res.data.result.insertId, username: user, liked: false }
+                dispatch(submitPostSuccess(addedPost))
+            }
+            if (res.data.err) {
+                dispatch(submitPostFail(`Couldn't submit post =/`))
+            }
         })
-        // .catch(err => setError('Couldn\'t submit post =/. Try again?'));
+        .catch(err => dispatch(submitPostFail(`Couldn't submit post =/`)));
     }
 }

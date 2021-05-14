@@ -157,7 +157,6 @@ app.get('/:id/all-posts', (req, res) => {
         SELECT u.user_id FROM users u WHERE username = ?) ORDER BY p.created_at DESC`, 
     [user, user], (err, result) => {
         if (err) {
-            console.log(err)
             res.send({postsErr: 'Couldn\'t get posts =/'})
         }
         if (result) {
@@ -165,7 +164,6 @@ app.get('/:id/all-posts', (req, res) => {
             db.query("SELECT likes.liked_post FROM likes WHERE user_id = (SELECT u.user_id FROM users u WHERE username = ?)",
             [user], (err, result) => {
                 if (err) {
-                    console.log(err)
                     res.send({postsErr: 'Couldn\'t get posts =/'})
                 }
                 if (result) {

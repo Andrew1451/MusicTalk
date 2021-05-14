@@ -40,14 +40,6 @@ const Home = ({ user, onFetchAllPosts, onSubmitPost, allPosts, err }) => {
         e.preventDefault()
         onSubmitPost(user, post)
         setPost('')
-        // TODO: handle error
-        // axios.post(`/${user}/add-post`, {post})
-        // .then(res => {
-        //     setPosts([...posts, {post: post, post_id: res.data.insertId, username: user, liked: false}])
-        //     setPost('')
-        //     setError(null)
-        // })
-        // .catch(err => setError('Couldn\'t submit post =/. Try again?'));
     }
 
     if (!user) {
@@ -71,7 +63,6 @@ const Home = ({ user, onFetchAllPosts, onSubmitPost, allPosts, err }) => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
-            {/* { error && <p className={classes.Error}>{error}</p> } */}
             { err && <p className={classes.Error}>{err}</p> }
             <ul>
                 {allPosts.map(post => {
