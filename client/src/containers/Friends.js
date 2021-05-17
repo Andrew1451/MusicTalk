@@ -11,6 +11,7 @@ const Friends = props => {
             let friendsArray = [];
             res.data.forEach(friend => friendsArray.push(friend.friend));
             setFriends(friendsArray);
+            //TODO: error handling
         }).catch(err => console.log(err))
     }, [props.state.user])
     const [friends, setFriends] = useState([]);

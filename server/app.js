@@ -68,7 +68,7 @@ app.post('/signin', (req, res) => {
     })
 })
 
-app.get('/find-friends', (req, res) => {
+app.get('/find-friends', (req, res, next) => {
     const username = req.query.user;
     db.query("SELECT u.username FROM users u WHERE u.username NOT IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)) AND u.username != ?", 
     [username, username], (err, result) => {
@@ -76,13 +76,12 @@ app.get('/find-friends', (req, res) => {
             res.send(result);
         }
         if (err) {
-            console.log(err)
-            res.send({err: 'Error occured :('});
+            next(err)
         }
     })
 })
 
-app.get('/your-friends', (req, res) => {
+app.get('/your-friends', (req, res, next) => {
     const username = req.query.user;
     db.query("SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)", 
     [username], (err, result) => {
@@ -90,18 +89,18 @@ app.get('/your-friends', (req, res) => {
             res.send(result)
         }
         if (err) {
-            res.send({err: 'Error occured :('})
+            next(err)
         }
     })
 })
 
-app.post('/:id/add-friend', (req, res) => {
+app.post('/:id/add-friend', (req, res, next) => {
     const friend = req.body.username;
     const user = req.params.id;
     db.query("INSERT INTO friends (friend, user) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
     [friend, user], (err, result) => {
         if (err) {
-            res.send({err: 'Couldn\'t add friend.. So lonely..'})
+            next(err)
         }
         if (result) {
             res.send({added: 'friend added!'})
@@ -109,13 +108,13 @@ app.post('/:id/add-friend', (req, res) => {
     })
 })
 
-app.post('/:id/add-post', (req, res) => {
+app.post('/:id/add-post', (req, res, next) => {
     const post = req.body.post;
     const user = req.params.id;
     db.query("INSERT INTO posts (post, post_author) values (?, (SELECT user_id FROM users WHERE username = ?))",
     [post, user], (err, result) => {
         if (err) {
-            res.send({err: 'Houston? We have a problem..'})
+            next(err)
         }
         if (result) {
             res.send({result})
@@ -123,19 +122,19 @@ app.post('/:id/add-post', (req, res) => {
     })
 })
 
-app.get('/:id/posts', (req, res) => {
+app.get('/:id/posts', (req, res, next) => {
     const user = req.params.id;
-    db.query("SELECT post, post_id, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?)",
+    db.query("SELECT post, post_id, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?) ORDER BY created_at DESC",
     [user], (err, result) => {
         if (err) {
-            res.send({postErr: 'Couldn\'t get posts =/'})
+            next(err)
         }
         if (result) {
             const posts = result;
             db.query("SELECT liked_post FROM likes WHERE user_id = (SELECT user_id FROM users WHERE username = ?)",
             [user], (err, result) => {
                 if (err) {
-                    res.send({postErr: 'Couldn\'t get posts =/'})
+                    next(err)
                 }
                 if (result) {
                     posts.forEach(post => {
@@ -148,7 +147,7 @@ app.get('/:id/posts', (req, res) => {
     })
 })
 
-app.get('/:id/all-posts', (req, res) => {
+app.get('/:id/all-posts', (req, res, next) => {
     const user = req.params.id;
     db.query(`SELECT p.post, p.post_author, p.created_at, p.post_id, u.username FROM posts p 
         INNER JOIN users u ON p.post_author = u.user_id WHERE p.post_author IN (
@@ -157,14 +156,14 @@ app.get('/:id/all-posts', (req, res) => {
         SELECT u.user_id FROM users u WHERE username = ?) ORDER BY p.created_at DESC`, 
     [user, user], (err, result) => {
         if (err) {
-            res.send({postsErr: 'Couldn\'t get posts =/'})
+            next(err)
         }
         if (result) {
             const allPosts = result;
             db.query("SELECT likes.liked_post FROM likes WHERE user_id = (SELECT u.user_id FROM users u WHERE username = ?)",
             [user], (err, result) => {
                 if (err) {
-                    res.send({postsErr: 'Couldn\'t get posts =/'})
+                    next(err)
                 }
                 if (result) {
                     const likes = result.map(like => like['liked_post'])
@@ -179,16 +178,15 @@ app.get('/:id/all-posts', (req, res) => {
     })
 })
 
-app.post('/:id/like', (req, res) => {
+app.post('/:id/like', (req, res, next) => {
     const postid = req.body.postId;
     const user = req.params.id;
     db.query("INSERT INTO likes (liked_post, user_id) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
     [postid, user], (err, result) => {
         if (err) {
-            res.send({error: 'Couldn\'t like post =/'})
+            next(err)
         }
         if (result) {
-            console.log(result);
             res.send({liked: true})
         }
     })

@@ -17,6 +17,7 @@ const FindFriends = props => {
             setFriends(friendArray);
             setError(null);
         })
+        //TODO: error handling
         .catch(err => console.log(err));
     }, [props.state]);
     const [error, setError] = useState(null);
@@ -29,6 +30,7 @@ const FindFriends = props => {
                 setAdded([...added, i])
             }
         })
+        //TODO: error handling
         .catch(err => console.log(err));
     }
     return (

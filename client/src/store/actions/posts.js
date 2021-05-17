@@ -42,9 +42,6 @@ export const likePost = (user, postid) => {
             if (res.data.liked) {
                 dispatch(likePostSuccess(postid))
             }
-            if (res.data.error) {
-                dispatch(likePostFail(postid))
-            }
         })
         .catch(err => {
             dispatch(likePostFail(postid))
@@ -75,9 +72,6 @@ export const fetchAllPosts = user => {
                 res.data.allPosts.forEach(post => posts.push(post));
                 dispatch(allPostsSuccess(posts));
             }
-            if (res.data.postsErr) {
-                dispatch(allPostsFail(`Had trouble grabbing posts =/`))
-            }
         })
         .catch(err => {
             dispatch(allPostsFail(`Had trouble grabbing posts =/`))
@@ -92,9 +86,6 @@ export const submitPost = (user, post) => {
             if (res.data.result) {
                 const addedPost = { post: post, post_id: res.data.result.insertId, username: user, liked: false }
                 dispatch(submitPostSuccess(addedPost))
-            }
-            if (res.data.err) {
-                dispatch(submitPostFail(`Couldn't submit post =/`))
             }
         })
         .catch(err => dispatch(submitPostFail(`Couldn't submit post =/`)));
