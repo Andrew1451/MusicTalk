@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
@@ -32,7 +32,7 @@ const reducer = (state, action) => {
     }
 }
 
-const Profile = props => {
+const Profile = ({onFetchUserPosts, posts, ...props}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
@@ -46,21 +46,9 @@ const Profile = props => {
         .then(res => {
             dispatch({type: 'updateFriends', friends: res.data})
         }).catch(err => console.log(err));
-    }, [props.state.user]);
-    useEffect(() => {
-        axios.get(`/${props.state.user}/posts`)
-        .then(res => {
-            let postsArray = [];
-            res.data.posts.forEach(post => {
-                postsArray.push(post)
-            });
-            setPosts(postsArray);
-        })
-        .catch(err => console.log(err))
-    }, [props.state.user])
-
-    const [posts, setPosts] = useState([]);
-    
+        onFetchUserPosts(props.state.user);
+    }, [props.state.user, onFetchUserPosts]);
+ 
     return (
         <div className={classes.Profile}>
             <h2>Hi, {props.state.user}!</h2>
@@ -80,7 +68,7 @@ const Profile = props => {
             <section>
                 <h3>Your Posts</h3>
                 <ul>
-                    {posts.length > 0 ? posts.map(post => {
+                    {posts.userPosts.length > 0 ? posts.userPosts.map(post => {
                         return <Post key={post.created_at} 
                                     postid={post.post_id} 
                                     post={post.post} 
@@ -99,13 +87,15 @@ const Profile = props => {
 
 const mapStateToProps = state => {
     return {
-        state: state.auth
+        state: state.auth,
+        posts: state.posts
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: () => dispatch(actions.login())
+        onLogin: () => dispatch(actions.login()),
+        onFetchUserPosts: (user) => dispatch(actions.fetchUserPosts(user))
     }
 }
 

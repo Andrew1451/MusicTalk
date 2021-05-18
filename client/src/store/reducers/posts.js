@@ -22,7 +22,20 @@ const allPostsFail = (state, action) => {
     }
 }
 
-//TODO: add userPosts
+const userPostsSuccess = (state, action) => {
+    return {
+        ...state,
+        userPosts: action.posts,
+        postsError: null
+    }
+}
+
+const userPostsFail = (state, action) => {
+    return {
+        ...state,
+        postsError: 'Couldn\'t grab posts :('
+    }
+}
 
 const likePostSuccess = (state, action) => {
     const posts = state.allPosts.map(post => {
@@ -87,6 +100,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_LOGOUT: return logout(state, action);
         case actionTypes.SUBMIT_POST_SUCCESS: return submitPostSuccess(state, action);
         case actionTypes.SUBMIT_POST_FAIL: return submitPostFail(state, action);
+        case actionTypes.USER_POSTS_SUCCESS: return userPostsSuccess(state, action);
+        case actionTypes.USER_POSTS_FAIL: return userPostsFail(state, action);
         default: return state;
     }
 }

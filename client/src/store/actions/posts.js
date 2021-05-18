@@ -63,6 +63,19 @@ export const submitPostFail = error => {
     }
 }
 
+export const userPostsSuccess = posts => {
+    return {
+        type: actionTypes.USER_POSTS_SUCCESS,
+        posts
+    }
+}
+
+export const userPostsFail = () => {
+    return {
+        type: actionTypes.USER_POSTS_FAIL
+    }
+}
+
 export const fetchAllPosts = user => {
     return dispatch => {
         axios.get(`/${user}/all-posts`)
@@ -76,6 +89,20 @@ export const fetchAllPosts = user => {
         .catch(err => {
             dispatch(allPostsFail(`Had trouble grabbing posts =/`))
         })
+    }
+}
+
+export const fetchUserPosts = user => {
+    return dispatch => {
+        axios.get(`/${user}/posts`)
+        .then(res => {
+            let postsArray = [];
+            res.data.posts.forEach(post => {
+                postsArray.push(post)
+            });
+            dispatch(userPostsSuccess(postsArray))
+        })
+        .catch(err => dispatch(userPostsFail()))
     }
 }
 
