@@ -11,10 +11,11 @@ const Friends = props => {
             let friendsArray = [];
             res.data.forEach(friend => friendsArray.push(friend.friend));
             setFriends(friendsArray);
-            //TODO: error handling
-        }).catch(err => console.log(err))
+            setError('')
+        }).catch(err => setError('Couldn\'t fetch friends :('))
     }, [props.state.user])
     const [friends, setFriends] = useState([]);
+    const [error, setError] = useState('');
     return (
         <div className={classes.FriendsPage}>
             <h1>Your Friends</h1>
@@ -22,6 +23,7 @@ const Friends = props => {
             <hr></hr>
             <input type='text' placeholder='Search Friends'></input>
             <button type='button' className={classes.SearchButton}>Search</button>
+            <p style={{color: 'red', paddingLeft: '34px'}}>{error}</p>
             <ul>
             {friends.map((username, i) => {
                return <li key={i}><NavLink to={`/friend/${username}`}>{username}</NavLink></li> 
