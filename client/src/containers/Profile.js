@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
@@ -6,34 +6,9 @@ import classes from './Profile.module.css';
 import Post from '../components/Post';
 import * as actions from '../store/actions/index';
 
-const initialState = {
-    friends: [],
-}
-
-const reducer = (state, action) => {
-    if (action.type === 'fetchFriends') {
-        return {
-            ...state,
-            friends: []
-        }
-    }
-    if (action.type === 'updateFriends') {
-        const updatedFriends = [...state.friends];
-        action.friends.forEach(friend => {
-            updatedFriends.push(friend.friend);
-        })
-        updatedFriends.splice(6);
-        return {
-            ...state,
-            friends: [...state.friends, ...updatedFriends]
-        }
-    } else {
-        throw new Error();
-    }
-}
-
 const Profile = ({onFetchUserPosts, posts, ...props}) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [friends, setFriends] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (props.state.redirectTo === '/profile') {
@@ -41,11 +16,16 @@ const Profile = ({onFetchUserPosts, posts, ...props}) => {
         }
     });
     useEffect(() => {
-        dispatch({type: 'fetchFriends'})
         axios.get('/your-friends', {params: {user: props.state.user}})
         .then(res => {
-            dispatch({type: 'updateFriends', friends: res.data})
-        }).catch(err => console.log(err));
+            const updatedFriends = [];
+            res.data.forEach(friend => {
+            updatedFriends.push(friend.friend);
+            })
+            updatedFriends.splice(6);
+            setFriends(updatedFriends);
+            setError(null)
+        }).catch(err => setError(`Couldn't get friends =/`));
         onFetchUserPosts(props.state.user);
     }, [props.state.user, onFetchUserPosts]);
  
@@ -56,9 +36,10 @@ const Profile = ({onFetchUserPosts, posts, ...props}) => {
                 <h3>Friends</h3>
                 <div className={classes.FriendsList}>
                     {/* display friends or Find Friends button */}
-                    {state.friends.length > 0 ? state.friends.map((friend, i) => {
+                    {friends.length > 0 ? friends.map((friend, i) => {
                         return <NavLink to={`/friend/${friend}`} className={classes.Friend} key={i}>{friend}</NavLink>
                     }) : <div className={classes.Links}><NavLink to={'/find-friends'}>Find Friends</NavLink></div>}
+                    {error && <p style={{color: 'red', textAlign: 'center'}}>{error}</p>}
                 </div>
                 <div className={classes.Links}>
                     <NavLink to={'/friends'}>View Friends</NavLink>
