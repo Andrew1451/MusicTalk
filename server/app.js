@@ -16,7 +16,7 @@ const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: process.env.DATABASE_PASSWORD,
-    database: 'MusicTalk'
+    database: 'MusicTalk',
 })
 
 app.use(cookieParser());
@@ -137,8 +137,9 @@ app.get('/:id/posts', (req, res, next) => {
                     next(err)
                 }
                 if (result) {
+                    const likes = result.map(like => like['liked_post'])
                     posts.forEach(post => {
-                        result.includes(post.post_id) ? post['liked'] = true : post['liked'] = false;
+                        likes.includes(post.post_id) ? post['liked'] = true : post['liked'] = false;
                     })
                     res.send({posts})
                 }
