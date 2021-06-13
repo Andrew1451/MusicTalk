@@ -17,8 +17,7 @@ const FindFriends = props => {
             setFriends(friendArray);
             setError(null);
         })
-        //TODO: error handling
-        .catch(err => console.log(err));
+        .catch(err => setError('Something went wrong =/'));
     }, [props.state]);
     const [error, setError] = useState(null);
     const [added, setAdded] = useState([]);
@@ -26,6 +25,7 @@ const FindFriends = props => {
     const addUser = (username, i) => {
         axios.post(`/${props.state.user}/add-friend`, {username})
         .then(res => {
+            setError(null)
             if (res.data.added) {
                 setAdded([...added, i])
             }
