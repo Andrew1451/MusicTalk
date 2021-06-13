@@ -111,7 +111,7 @@
 .Post {
     width: 100%;
     height: fit-content;
-    padding: 0 8px;
+    padding: 5px 15px;
     margin-top: 6px;
 }
 
@@ -147,6 +147,27 @@
 
 .LikeComment div:hover {
     cursor: pointer;
+}
+
+.Comment textarea {
+    margin: 0;
+    background-color: black;
+    width: 100%;
+    color: white;
+    padding: 11px 16px 7px 19px;
+}
+
+.Comment {
+    padding-bottom: 8px;
+}
+
+.Comment button {
+    background-color: black;
+    color: var(--blue);
+    border: .5px solid grey;
+    margin: 4px auto;
+    display: block;
+    font-size: .85rem;
 }
 
 @media (min-width: 650px) {

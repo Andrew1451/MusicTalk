@@ -1,3 +1,8 @@
+:root {
+  --blue: #01b7ee;
+  /* TODO: assign custom properties */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
