@@ -9,10 +9,17 @@ const Post = props => {
 
     const inputHandler = e => setComment(e.target.value)
 
+    const submitComment = e => {
+        e.preventDefault()
+        // onComment(comment, props.postid)
+        setComment('')
+    }
+
     const checkForEnter = e => {
         if (e.keyCode === 13 && e.shiftKey === false) {
-            setComment('');
             e.preventDefault();
+            submitComment(e)
+            setComment('');
         }
     }
     
@@ -30,8 +37,10 @@ const Post = props => {
                     <div style={{borderRight: 'none'}}>Comment</div>
                 </div>
                 <div className={classes.Comment} >
-                    <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} />
-                    <button>Submit</button>
+                    <form onSubmit={submitComment} style={{margin: '0'}}>
+                        <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} />
+                        <button type='submit'>Submit</button>
+                    </form>
                 </div>
             </li>
             {props.likeErr ? <p className={classes.LikeError}>{props.likeErr}</p> : null}

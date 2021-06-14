@@ -12,6 +12,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import authReducer from './store/reducers/auth';
 import postsReducer from './store/reducers/posts';
+import commentsReducer from './store/reducers/comments';
 
 
 const persistConfig = {
@@ -21,7 +22,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  posts: postsReducer
+  posts: postsReducer,
+  comments: commentsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
