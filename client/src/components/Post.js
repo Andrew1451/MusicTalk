@@ -3,15 +3,20 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
 import classes from '../containers/Profile.module.css';
 
-const Post = props => {
+const Post = ({postid, user, onComment, ...props}) => {
 
     const [comment, setComment] = useState('');
+    const [toggleComments, setToggleComments] = useState(false);
+
+    const commentsHandler = () => {
+        setToggleComments(!toggleComments);
+    }
 
     const inputHandler = e => setComment(e.target.value)
 
     const submitComment = e => {
         e.preventDefault()
-        // onComment(comment, props.postid)
+        onComment(user, postid, comment)
         setComment('')
     }
 
@@ -34,11 +39,11 @@ const Post = props => {
                 </div>
                 <div className={classes.LikeComment}>
                     {props.liked ? <div style={{color: 'lime'}}>Liked!</div> : <div onClick={() => props.onLikePost(props.user, props.postid)}>Like</div>}
-                    <div style={{borderRight: 'none'}}>Comment</div>
+                    <div style={{borderRight: 'none'}} onClick={commentsHandler}>Comments</div>
                 </div>
-                <div className={classes.Comment} >
+                <div className={`${classes.Comment} ${toggleComments ? classes.Open : classes.Close}`} >
                     <form onSubmit={submitComment} style={{margin: '0'}}>
-                        <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} />
+                        <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} autocomplete='on' />
                         <button type='submit'>Submit</button>
                     </form>
                 </div>
@@ -56,7 +61,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLikePost: (user, postid) => dispatch(actions.likePost(user, postid))
+        onLikePost: (user, postid) => dispatch(actions.likePost(user, postid)),
+        onComment: (user, postid, comment) => dispatch(actions.comment(user, postid, comment))
     }
 }
 

@@ -47,7 +47,7 @@ const fetchCommentsFail = (state, action) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.COMMENT_SUCCESS: return commentSuccess(state, action);
-        case actionTypes.COMMENT_FAI: return commentFail(state, action);
+        case actionTypes.COMMENT_FAIL: return commentFail(state, action);
         case actionTypes.FETCH_COMMENTS_SUCCESS: return fetchCommentsSuccess(state, action);
         case actionTypes.FETCH_COMMENTS_FAIL: return fetchCommentsFail(state, action);
         default: return state
