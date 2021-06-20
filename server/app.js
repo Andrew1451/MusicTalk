@@ -193,6 +193,21 @@ app.post('/:id/like', (req, res, next) => {
     })
 })
 
+app.post('/:id/comment', (req, res, next) => {
+    const user = req.params.id;
+    const postid = req.body.postid;
+    const comment = req.body.comment;
+    db.query("INSERT INTO comments (comment, post, comment_author) VALUES (?, ?, (SELECT user_id FROM users WHERE username = ?))",
+    [comment, postid, user], (err, result) => {
+        if (err) {
+            next(err)
+        }
+        if (result) {
+            res.sendStatus(200)
+        }
+    })
+})
+
 app.listen(port, () => {
     console.log(`server running on port: ${port}`);
 })

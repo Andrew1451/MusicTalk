@@ -1,15 +1,13 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-export const comment = (user, comment, postid) => {
+export const comment = (user, postid, comment) => {
     return dispatch => {
-        axios.post(`/${user}/comment`, {comment, postid})
+        axios.post(`/${user}/comment`, {postid, comment})
         .then(res => {
-            console.log(res)
             dispatch(commentSuccess(comment))
         })
         .catch(err => {
-            console.log(err)
             dispatch(commentFail())
         })
     }

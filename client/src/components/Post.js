@@ -43,7 +43,7 @@ const Post = ({postid, user, onComment, ...props}) => {
                 </div>
                 <div className={`${classes.Comment} ${toggleComments ? classes.Open : classes.Close}`} >
                     <form onSubmit={submitComment} style={{margin: '0'}}>
-                        <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} autocomplete='on' />
+                        <textarea  placeholder='Write a comment' onKeyDown={checkForEnter} value={comment} onChange={inputHandler} autoComplete='on' />
                         <button type='submit'>Submit</button>
                     </form>
                 </div>
