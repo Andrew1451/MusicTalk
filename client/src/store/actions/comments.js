@@ -30,8 +30,7 @@ export const fetchComments = (user, postid) => {
     return dispatch => {
         axios.get(`/${user}/comments/${postid}`)
         .then(res => {
-            //todo: parse comments
-            let comments;
+            const comments = res.data
             dispatch(fetchCommentsSuccess(comments))
         })
         .catch(err => {
