@@ -211,7 +211,7 @@ app.post('/:id/comment', (req, res, next) => {
 app.get('/:id/comments/:postid', (req, res, next) => {
     const user = req.params.id;
     const postid = req.params.postid;
-    db.query(`SELECT c.comment, c.comment_author, c.created_at, u.username FROM comments c 
+    db.query(`SELECT c.comment, c.created_at, u.username FROM comments c 
     INNER JOIN users u ON c.comment_author = u.user_id INNER JOIN posts p ON p.post_id = c.post
     WHERE c.post = ? AND u.username IN (SELECT u.username FROM users u WHERE u.user_id = c.comment_author) 
     ORDER BY c.created_at DESC`, [postid], (err, result) => {
