@@ -180,6 +180,11 @@
     display: none;
 }
 
+.CommentErr {
+    color: red;
+    text-align: center;
+}
+
 @media (min-width: 650px) {
     .Profile {
         width: 30rem;
