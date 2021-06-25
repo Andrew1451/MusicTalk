@@ -3,18 +3,7 @@ import * as actionTypes from '../actions/actionTypes'
 const initialState = {
     comments: [],
     commentError: null,
-    fetchCommentsError: null,
-    showComments: false
-}
-
-const commentSuccess = (state, action) => {
-    return {
-        ...state,
-        commentError: null,
-        fetchCommentsError: null,
-        comments: [action.comment, ...state.comments],
-        showComments: true,
-    }
+    fetchCommentsError: null
 }
 
 const commentFail = (state, action) => {
@@ -25,12 +14,14 @@ const commentFail = (state, action) => {
 }
 
 const fetchCommentsSuccess = (state, action) => {
+    const fetchedComments = {postid: action.postid, comments: action.comments}
+    const updatedComments = state.comments.filter(c => c.postid !== fetchedComments.postid)
+    updatedComments.push(fetchedComments)
     return {
         ...state,
-        comments: action.comments,
+        comments: updatedComments,
         commentError: null,
         fetchCommentsError: null,
-        showComments: true
     }
 }
 
@@ -40,13 +31,11 @@ const fetchCommentsFail = (state, action) => {
         comments: [],
         commentError: null,
         fetchCommentsError: `Couldn't grab comments :(`,
-        showComments: true  //set to true to show error
     }
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.COMMENT_SUCCESS: return commentSuccess(state, action);
         case actionTypes.COMMENT_FAIL: return commentFail(state, action);
         case actionTypes.FETCH_COMMENTS_SUCCESS: return fetchCommentsSuccess(state, action);
         case actionTypes.FETCH_COMMENTS_FAIL: return fetchCommentsFail(state, action);
