@@ -5,18 +5,11 @@ export const comment = (user, postid, comment) => {
     return dispatch => {
         axios.post(`/${user}/comment`, {postid, comment})
         .then(res => {
-            dispatch(commentSuccess(comment))
+            dispatch(fetchComments(user, postid))
         })
         .catch(err => {
             dispatch(commentFail())
         })
-    }
-}
-
-export const commentSuccess = comment => {
-    return {
-        type: actionTypes.COMMENT_SUCCESS,
-        comment
     }
 }
 
@@ -29,20 +22,20 @@ export const commentFail = () => {
 export const fetchComments = (user, postid) => {
     return dispatch => {
         axios.get(`/${user}/comments/${postid}`)
-        .then(res => {
-            const comments = res.data
-            dispatch(fetchCommentsSuccess(comments))
+               //destructure response object to get data and call it comments
+        .then( ({data: comments}) => {
+            dispatch(fetchCommentsSuccess(postid, comments))
         })
         .catch(err => {
-            console.log(err)
             dispatch(fetchCommentsFail())
         })
     }
 }
 
-export const fetchCommentsSuccess = comments => {
+export const fetchCommentsSuccess = (postid, comments) => {
     return {
         type: actionTypes.FETCH_COMMENTS_SUCCESS,
+        postid,
         comments
     }
 }

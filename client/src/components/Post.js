@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import Comment from './Comment';
 import * as actions from '../store/actions/index';
 import classes from '../containers/Profile.module.css';
 
-const Post = ({postid, user, onComment, onFetchComments, ...props}) => {
+const Post = ({postid, user, onComment, onFetchComments, comments, ...props}) => {
 
     const [comment, setComment] = useState('');
     const [toggleComments, setToggleComments] = useState(false);
 
     const commentsHandler = (user, postid) => {
-        onFetchComments(user, postid)
-        setToggleComments(!toggleComments);
+        if (!toggleComments) {
+            onFetchComments(user, postid)
+            setToggleComments(true)
+            return
+        }
+        if (toggleComments) {
+            setToggleComments(false)
+        }
     }
 
     const inputHandler = e => setComment(e.target.value)
@@ -50,6 +57,14 @@ const Post = ({postid, user, onComment, onFetchComments, ...props}) => {
                     {props.commentErr && <p className={classes.CommentErr}>{props.commentErr}</p> }
                     {props.fetchCommentErr && <p className={classes.CommentErr}>{props.fetchCommentErr}</p>}
                 </div>
+                {comments && comments.map(({comments}) => (
+                    comments.map(comment => {
+                        if (comment.post === postid && toggleComments) {
+                            return <Comment key={comment.comment_id} comment={comment.comment} username={comment.username} />
+                        }
+                        return null
+                    })
+                ))}
             </li>
             {props.likeErr ? <p className={classes.LikeError}>{props.likeErr}</p> : null}
         </>
@@ -61,7 +76,7 @@ const mapStateToProps = state => {
         postErr: state.posts.postsError,
         comments: state.comments.comments,
         commentErr: state.comments.commentError,
-        fetchCommentErr: state.comments.fetchCommentsError
+        fetchCommentsErr: state.comments.fetchCommentsError
     }
 }
 
