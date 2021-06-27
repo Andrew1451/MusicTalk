@@ -1,3 +1,15 @@
+.Comment {
+    padding: 4px 17px;
+}
+
 .Comment h3 {
     color: var(--blue);
+    font-size: 19px;
+    margin: 0;
+}
+
+.Comment p {
+    margin: 0;
+    margin-bottom: 18px;
+    font-size: .9rem;
 }
