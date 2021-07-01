@@ -57,8 +57,9 @@ const Post = ({postid, user, onComment, onFetchComments, comments, ...props}) =>
                     {props.commentErr && <p className={classes.CommentErr}>{props.commentErr}</p> }
                     {props.fetchCommentErr && <p className={classes.CommentErr}>{props.fetchCommentErr}</p>}
                 </div>
-                {comments && comments.map(({comments}) => (
-                    comments.map(comment => {
+                {/* comments are an array of objects */}
+                {comments && comments.map(({comments}) => ( //destructure each comment object and grab the array of comments
+                    comments.map(comment => {  //map over the array of comments
                         if (comment.post === postid && toggleComments) {
                             return <Comment key={comment.comment_id} comment={comment.comment} username={comment.username} />
                         }
