@@ -30,8 +30,7 @@ const FindFriends = props => {
                 setAdded([...added, i])
             }
         })
-        //TODO: error handling
-        .catch(err => console.log(err));
+        .catch(err => setError(`Couldn't add friend :(`));
     }
     return (
         <div className={classes.FriendsPage}>
