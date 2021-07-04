@@ -12,11 +12,18 @@ require('dotenv').config();
 
 app.use(cors());
 
+// const db = mysql.createConnection({
+//     user: 'root',
+//     host: 'localhost',
+//     password: process.env.DATABASE_PASSWORD,
+//     database: 'MusicTalk',
+// })
+
 const db = mysql.createConnection({
-    user: 'root',
-    host: 'localhost',
-    password: process.env.DATABASE_PASSWORD,
-    database: 'MusicTalk',
+    user: process.env.DBU,
+    host: process.env.DBH,
+    password: process.env.DBP,
+    database: process.env.DBN,
 })
 
 app.use(cookieParser());
@@ -224,6 +231,6 @@ app.get('/:id/comments/:postid', (req, res, next) => {
     })
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`server running on port: ${port}`);
 })
