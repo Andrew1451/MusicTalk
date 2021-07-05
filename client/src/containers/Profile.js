@@ -16,7 +16,7 @@ const Profile = ({onFetchUserPosts, posts, ...props}) => {
         }
     });
     useEffect(() => {
-        axios.get('/your-friends', {params: {user: props.state.user}})
+        axios.get('https://music-talk.herokuapp.com/your-friends', {params: {user: props.state.user}})
         .then(res => {
             const updatedFriends = [];
             res.data.forEach(friend => {

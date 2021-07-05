@@ -6,7 +6,7 @@ import classes from './Friends.module.css';
 
 const Friends = props => {
     useEffect(() => {
-        axios.get('/your-friends', {params: {user: props.state.user}})
+        axios.get('https://music-talk.herokuapp.com/your-friends', {params: {user: props.state.user}})
         .then(res => {
             let friendsArray = [];
             res.data.forEach(friend => friendsArray.push(friend.friend));

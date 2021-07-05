@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const comment = (user, postid, comment) => {
     return dispatch => {
-        axios.post(`/${user}/comment`, {postid, comment})
+        axios.post(`https://music-talk.herokuapp.com/${user}/comment`, {postid, comment})
         .then(res => {
             dispatch(fetchComments(user, postid))
         })
@@ -21,7 +21,7 @@ export const commentFail = () => {
 
 export const fetchComments = (user, postid) => {
     return dispatch => {
-        axios.get(`/${user}/comments/${postid}`)
+        axios.get(`https://music-talk.herokuapp.com/${user}/comments/${postid}`)
                //destructure response object to get data and call it comments
         .then( ({data: comments}) => {
             dispatch(fetchCommentsSuccess(postid, comments))

@@ -6,7 +6,7 @@ import classes from './Friends.module.css';
 
 const FindFriends = props => {
     useEffect(() => {
-        axios.get('/find-friends', {params: {user: props.state.user}})
+        axios.get('https://music-talk.herokuapp.com/find-friends', {params: {user: props.state.user}})
         .then(res => {
             let friendArray = [];
             if (res.data.err) {
@@ -23,7 +23,7 @@ const FindFriends = props => {
     const [added, setAdded] = useState([]);
     const [friends, setFriends] = useState([]);
     const addUser = (username, i) => {
-        axios.post(`/${props.state.user}/add-friend`, {username})
+        axios.post(`https://music-talk.herokuapp.com/${props.state.user}/add-friend`, {username})
         .then(res => {
             setError(null)
             if (res.data.added) {

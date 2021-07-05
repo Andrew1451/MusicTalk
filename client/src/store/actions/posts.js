@@ -37,7 +37,7 @@ export const logout = () => {
 
 export const likePost = (user, postid) => {
     return dispatch => {
-        axios.post(`/${user}/like`, {postId: postid})
+        axios.post(`https://music-talk.herokuapp.com/${user}/like`, {postId: postid})
         .then(res => {
             if (res.data.liked) {
                 dispatch(likePostSuccess(postid))
@@ -78,7 +78,7 @@ export const userPostsFail = () => {
 
 export const fetchAllPosts = user => {
     return dispatch => {
-        axios.get(`/${user}/all-posts`)
+        axios.get(`https://music-talk.herokuapp.com/${user}/all-posts`)
         .then(res => {
             if (res.data.allPosts) {
                 let posts = [];
@@ -94,7 +94,7 @@ export const fetchAllPosts = user => {
 
 export const fetchUserPosts = user => {
     return dispatch => {
-        axios.get(`/${user}/posts`)
+        axios.get(`https://music-talk.herokuapp.com/${user}/posts`)
         .then(res => {
             let postsArray = [];
             res.data.posts.forEach(post => {
@@ -108,7 +108,7 @@ export const fetchUserPosts = user => {
 
 export const submitPost = (user, post) => {
     return dispatch => {
-        axios.post(`/${user}/add-post`, {post})
+        axios.post(`https://music-talk.herokuapp.com/${user}/add-post`, {post})
         .then(res => {
             if (res.data.result) {
                 const addedPost = { post: post, post_id: res.data.result.insertId, username: user, liked: false }

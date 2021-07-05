@@ -58,7 +58,7 @@ export const login = () => {
 export const signin = (username, password) => {
     return dispatch => {
         dispatch(signinStart());
-        axios.post('/signin', {username, password})
+        axios.post('https://music-talk.herokuapp.com/signin', {username, password})
         .then(res => {
             if (res.data.err) {
                 dispatch(signinFail(res.data.err));
@@ -73,7 +73,7 @@ export const signin = (username, password) => {
 export const signup = (username, password) => {
     return dispatch => {
         dispatch(signupStart());
-        axios.post('/sign-up', {
+        axios.post('https://music-talk.herokuapp.com/sign-up', {
             username: username,
             password: password
         }).then(res => {
@@ -89,7 +89,6 @@ export const signup = (username, password) => {
                 dispatch(signupSuccess(res.data.username, '/profile'));
             }
         }).catch(error => {
-            console.log(error)
             dispatch(signupFail('An error occured'));
         })
     }
