@@ -20,7 +20,7 @@ app.use(cors());
 //     database: 'MusicTalk',
 // })
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     user: process.env.DBU,
     host: process.env.DBH,
     password: process.env.DBP,
@@ -64,6 +64,9 @@ app.post('/signin', (req, res) => {
     const password = req.body.password;
     db.query("SELECT * FROM users WHERE username = ?",
     [username], (err, result) => {
+        if (err) {
+            res.send({err: `Couldn't find username :(`})
+        }
         if (!result) {
             res.send({err: 'username doesn\'t exist :('})
         } else {
@@ -71,7 +74,8 @@ app.post('/signin', (req, res) => {
                 if (match) {
                     res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
                     res.send({username});
-                } else {
+                } 
+                if (err) {
                     res.send({err: 'wrong password :('})
                 }
             })
