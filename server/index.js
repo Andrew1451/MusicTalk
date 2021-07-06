@@ -39,17 +39,18 @@ app.use(session({
 }));
 const saltRounds = 10;
 
-app.post('/sign-up', (req, res) => {
+app.post('/sign-up', (req, res, next) => {
     const username = req.body.username;
-    console.log(`username: ${username}`)
     const password = req.body.password;
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        if (err) {
+            next(err)
+        }
         db.query(
             "INSERT INTO users (username, password) VALUES (?, ?)",
             [username, hashedPassword], (err, result) => {
                 if (err) {
-                    console.log(err)
-                    res.send({error: err})
+                    next(err)
                 } else {
                     res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
                     res.send({username: username});
@@ -59,13 +60,13 @@ app.post('/sign-up', (req, res) => {
     })
 })
 
-app.post('/signin', (req, res) => {
+app.post('/signin', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     db.query("SELECT * FROM users WHERE username = ?",
     [username], (err, result) => {
         if (err) {
-            res.send({err: `Couldn't find username :(`})
+            next(err)
         }
         if (!result) {
             res.send({err: 'username doesn\'t exist :('})
@@ -77,6 +78,7 @@ app.post('/signin', (req, res) => {
                 } 
                 if (err) {
                     res.send({err: 'wrong password :('})
+                    next(err)
                 }
             })
         }

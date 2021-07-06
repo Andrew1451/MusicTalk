@@ -67,6 +67,7 @@ export const signin = (username, password) => {
                 dispatch(signinSuccess(res.data.username, '/profile'));
             }
         })
+        .catch(err => dispatch(signinFail('wrong password =(')))
     }
 }
 
@@ -89,7 +90,6 @@ export const signup = (username, password) => {
                 dispatch(signupSuccess(res.data.username, '/profile'));
             }
         }).catch(error => {
-            console.log(error)
             dispatch(signupFail('An error occured'));
         })
     }
