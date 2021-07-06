@@ -77,7 +77,7 @@ app.post('/signin', (req, res, next) => {
                     res.send({username});
                 } 
                 if (err) {
-                    res.send({err: 'wrong password :('})
+                    // res.send({err: 'wrong password :('})
                     next(err)
                 }
             })
