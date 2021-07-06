@@ -5,8 +5,9 @@ const cookieParser  = require('cookie-parser');
 const port          = process.env.PORT || 5000;
 const mysql         = require('mysql');
 const cors          = require('cors');
-const session       = require('express-session');
+const session       = require('cookie-session');
 const bcrypt        = require('bcrypt');
+const path          = require('path');
 
 require('dotenv').config();
 
@@ -26,6 +27,7 @@ const db = mysql.createConnection({
     database: process.env.DBN,
 })
 
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -37,14 +39,16 @@ app.use(session({
 }));
 const saltRounds = 10;
 
-app.post('https://music-talk.herokuapp.com/sign-up', (req, res) => {
+app.post('/sign-up', (req, res) => {
     const username = req.body.username;
+    console.log(`username: ${username}`)
     const password = req.body.password;
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         db.query(
             "INSERT INTO users (username, password) VALUES (?, ?)",
             [username, hashedPassword], (err, result) => {
                 if (err) {
+                    console.log(err)
                     res.send({error: err})
                 } else {
                     res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
@@ -55,7 +59,7 @@ app.post('https://music-talk.herokuapp.com/sign-up', (req, res) => {
     })
 })
 
-app.post('https://music-talk.herokuapp.com/signin', (req, res) => {
+app.post('/signin', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     db.query("SELECT * FROM users WHERE username = ?",
@@ -75,7 +79,7 @@ app.post('https://music-talk.herokuapp.com/signin', (req, res) => {
     })
 })
 
-app.get('https://music-talk.herokuapp.com/find-friends', (req, res, next) => {
+app.get('/find-friends', (req, res, next) => {
     const username = req.query.user;
     db.query("SELECT u.username FROM users u WHERE u.username NOT IN (SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)) AND u.username != ?", 
     [username, username], (err, result) => {
@@ -88,7 +92,7 @@ app.get('https://music-talk.herokuapp.com/find-friends', (req, res, next) => {
     })
 })
 
-app.get('https://music-talk.herokuapp.com/your-friends', (req, res, next) => {
+app.get('/your-friends', (req, res, next) => {
     const username = req.query.user;
     db.query("SELECT f.friend FROM friends f WHERE user = (SELECT u.user_id FROM users u WHERE username = ?)", 
     [username], (err, result) => {
@@ -101,7 +105,7 @@ app.get('https://music-talk.herokuapp.com/your-friends', (req, res, next) => {
     })
 })
 
-app.post('https://music-talk.herokuapp.com/:id/add-friend', (req, res, next) => {
+app.post('/:id/add-friend', (req, res, next) => {
     const friend = req.body.username;
     const user = req.params.id;
     db.query("INSERT INTO friends (friend, user) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
@@ -115,7 +119,7 @@ app.post('https://music-talk.herokuapp.com/:id/add-friend', (req, res, next) => 
     })
 })
 
-app.post('https://music-talk.herokuapp.com/:id/add-post', (req, res, next) => {
+app.post('/:id/add-post', (req, res, next) => {
     const post = req.body.post;
     const user = req.params.id;
     db.query("INSERT INTO posts (post, post_author) values (?, (SELECT user_id FROM users WHERE username = ?))",
@@ -129,7 +133,7 @@ app.post('https://music-talk.herokuapp.com/:id/add-post', (req, res, next) => {
     })
 })
 
-app.get('https://music-talk.herokuapp.com/:id/posts', (req, res, next) => {
+app.get('/:id/posts', (req, res, next) => {
     const user = req.params.id;
     db.query("SELECT post, post_id, created_at FROM posts WHERE post_author = (SELECT user_id FROM users WHERE username = ?) ORDER BY created_at DESC",
     [user], (err, result) => {
@@ -155,7 +159,7 @@ app.get('https://music-talk.herokuapp.com/:id/posts', (req, res, next) => {
     })
 })
 
-app.get('https://music-talk.herokuapp.com/:id/all-posts', (req, res, next) => {
+app.get('/:id/all-posts', (req, res, next) => {
     const user = req.params.id;
     db.query(`SELECT p.post, p.post_author, p.created_at, p.post_id, u.username FROM posts p 
         INNER JOIN users u ON p.post_author = u.user_id WHERE p.post_author IN (
@@ -186,7 +190,7 @@ app.get('https://music-talk.herokuapp.com/:id/all-posts', (req, res, next) => {
     })
 })
 
-app.post('https://music-talk.herokuapp.com/:id/like', (req, res, next) => {
+app.post('/:id/like', (req, res, next) => {
     const postid = req.body.postId;
     const user = req.params.id;
     db.query("INSERT INTO likes (liked_post, user_id) VALUES (?, (SELECT user_id FROM users WHERE username = ?))",
@@ -200,7 +204,7 @@ app.post('https://music-talk.herokuapp.com/:id/like', (req, res, next) => {
     })
 })
 
-app.post('https://music-talk.herokuapp.com/:id/comment', (req, res, next) => {
+app.post('/:id/comment', (req, res, next) => {
     const user = req.params.id;
     const postid = req.body.postid;
     const comment = req.body.comment;
@@ -215,7 +219,7 @@ app.post('https://music-talk.herokuapp.com/:id/comment', (req, res, next) => {
     })
 })
 
-app.get('https://music-talk.herokuapp.com/:id/comments/:postid', (req, res, next) => {
+app.get('/:id/comments/:postid', (req, res, next) => {
     const user = req.params.id;
     const postid = req.params.postid;
     db.query(`SELECT c.comment, c.comment_id, c.post, c.created_at, u.username FROM comments c 

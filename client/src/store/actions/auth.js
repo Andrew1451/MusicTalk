@@ -89,6 +89,7 @@ export const signup = (username, password) => {
                 dispatch(signupSuccess(res.data.username, '/profile'));
             }
         }).catch(error => {
+            console.log(error)
             dispatch(signupFail('An error occured'));
         })
     }
