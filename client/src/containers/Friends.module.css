@@ -11,17 +11,14 @@
 }
 
 .FriendsPage hr {
-    width: 18.9rem;
+    width: 100%;
     margin-top: 0;
-    margin-left: 2rem;
 }
 
 .FriendsPage input {
     font-size: .9rem;
-    padding-left: .4em;
-    margin-left: 2rem;
     height: 1.7rem;
-    width: 14.4rem;
+    width: 73%;
 }
 
 .FriendsPage li {
@@ -60,10 +57,16 @@
     border: none;
 }
 
+.Filter {
+    margin: 0 auto;
+    width: 81%;
+    padding-left: 2px;
+}
+
 .SearchButton {
     float: right;
-    margin-right: 2rem;
     height: 1.7rem;
+    width: 25%;
 }
 
 .Error {

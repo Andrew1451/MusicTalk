@@ -36,9 +36,11 @@ const FindFriends = props => {
         <div className={classes.FriendsPage}>
             <h1>Find Friends</h1>
             <NavLink to='/friends' className={classes.FindFriends}>Your Friends</NavLink>
-            <hr></hr>
-            <input type='text' placeholder='Search Friends'></input>
-            <button type='button' className={classes.SearchButton}>Search</button>
+            <div className={classes.Filter}>
+                <hr></hr>
+                <input type='text' placeholder='Search Friends'></input>
+                <button type='button' className={classes.SearchButton}>Search</button>
+            </div>
             <ul>
             {friends.map((username, i) => {
                 if (added.includes(i)) {
