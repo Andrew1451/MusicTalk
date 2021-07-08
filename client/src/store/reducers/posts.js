@@ -38,6 +38,14 @@ const userPostsFail = (state, action) => {
 }
 
 const likePostSuccess = (state, action) => {
+    const userPosts = state.userPosts.map(post => {
+        if (post.post_id === action.postid) {
+            post['liked'] = true
+            post['likeError'] = null
+            return post
+        }
+        return post
+    })
     const posts = state.allPosts.map(post => {
         if (post.post_id === action.postid) {
             post['liked'] = true
@@ -48,7 +56,8 @@ const likePostSuccess = (state, action) => {
     })
     return {
         ...state,
-        allPosts: posts
+        allPosts: posts,
+        userPosts
     }
 }
 

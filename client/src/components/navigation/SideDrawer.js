@@ -11,7 +11,7 @@ const SideDrawer = props => {
     return (
         <>
             <MenuButton clicked={props.sideDrawerToggled} open={props.open} />
-            <div className={classes.MenuContainer}>
+            <div className={`${classes.MenuContainer} ${props.open ? classes.Open : classes.Close}`}>
                 <div className={attachedClasses.join(' ')}>
                     <nav>
                         <NavigationList clicked={props.sideDrawerToggled} />

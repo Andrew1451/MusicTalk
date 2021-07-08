@@ -20,9 +20,11 @@ const Friends = props => {
         <div className={classes.FriendsPage}>
             <h1>Your Friends</h1>
             <NavLink to='/find-friends' className={classes.FindFriends}>Find Friends</NavLink>
-            <hr></hr>
-            <input type='text' placeholder='Search Friends'></input>
-            <button type='button' className={classes.SearchButton}>Search</button>
+            <div className={classes.Filter}>
+                <hr></hr>
+                <input type='text' placeholder='Search Friends'></input>
+                <button type='button' className={classes.SearchButton}>Search</button>
+            </div>
             <p style={{color: 'red', paddingLeft: '34px'}}>{error}</p>
             <ul>
             {friends.map((username, i) => {

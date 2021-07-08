@@ -66,18 +66,17 @@ app.post('/signin', (req, res, next) => {
     db.query("SELECT * FROM users WHERE username = ?",
     [username], (err, result) => {
         if (err) {
+            res.send({err: 'wrong username :('})
             next(err)
         }
-        if (!result) {
-            res.send({err: 'username doesn\'t exist :('})
-        } else {
+        else {
             bcrypt.compare(password, result[0].password, (err, match) => {
                 if (match) {
                     res.cookie('user', username, {maxAge: 60 * 60 * 24 * 30});
                     res.send({username});
                 } 
-                if (err) {
-                    // res.send({err: 'wrong password :('})
+                if (!match) {
+                    res.send({err: 'wrong password :('})
                     next(err)
                 }
             })

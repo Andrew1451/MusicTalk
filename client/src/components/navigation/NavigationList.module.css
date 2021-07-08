@@ -10,6 +10,7 @@
         margin-left: auto;
         margin-right: 23px;
         height: 24px;
+        padding-left: 13px;
     }
     a:hover {
         border-bottom: 1px solid lime;

@@ -1,7 +1,7 @@
 .SideDrawer {
     position: absolute;
     top: 0;
-    right: -200px;
+    right: 0;
     width: fit-content;
     z-index: 100;
     padding: 40px 29px 15px 29px;
@@ -10,7 +10,7 @@
     font-size: 21px;
     background-color: black;
     box-sizing: border-box;
-    transition: transform 0.3s ease-out;
+    transition: width 0.3s ease-out;
 }
 
 .SideDrawer li {
@@ -20,20 +20,21 @@
 .MenuContainer {
     overflow: hidden;
     height: 200px;
-    width: 141px;
+    width: 0;
     position: absolute;
     float: right;
     top: 0;
     right: 0;
     z-index: 100;
+    transition: width .3s ease-out;
 }
 
 .Open {
-    transform: translateX(-219px);
+    width: 200px
 }
 
 .Close {
-    transform: translateX(0);
+    width: 0;
 }
 
 @media (min-width: 650px) {

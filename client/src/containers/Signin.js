@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import * as actions from '../store/actions/index';
 import classes from './Signup.module.css';
 
-const Signin = props => {
+const Signin = ({state, ...props}) => {
+
     const [signin, setSignin] = useState({
         signinUsername: '',
         signinPassword: ''
@@ -25,14 +26,14 @@ const Signin = props => {
         setSignin(updatedInputs);
     }
 
-    if (props.state.redirectTo) {
-        return <Redirect push to={props.state.redirectTo} />
+    if (state.redirectTo) {
+        return <Redirect push to={state.redirectTo} />
     }
 
     let errorMessage;
 
-    if (props.state.error) {
-        errorMessage = props.state.error;
+    if (state.error) {
+        errorMessage = state.error;
     }
 
     return (
