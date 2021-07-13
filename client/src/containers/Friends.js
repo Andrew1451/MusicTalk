@@ -25,7 +25,7 @@ const Friends = props => {
                 <input type='text' placeholder='Search Friends'></input>
                 <button type='button' className={classes.SearchButton}>Search</button>
             </div>
-            <p style={{color: 'red', paddingLeft: '34px'}}>{error}</p>
+            {error && null}
             <ul>
             {friends.map((username, i) => {
                return <li key={i}><NavLink to={`/friend/${username}`}>{username}</NavLink></li> 

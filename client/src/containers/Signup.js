@@ -42,7 +42,6 @@ const Signup = props => {
     
     if (props.state.error) {
         errorMessage = props.state.error;
-        console.log(`errorMessage: ${errorMessage}`)
     }
 
     return (

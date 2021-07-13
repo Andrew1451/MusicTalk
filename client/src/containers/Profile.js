@@ -39,7 +39,7 @@ const Profile = ({onFetchUserPosts, posts, ...props}) => {
                     {friends.length > 0 ? friends.map((friend, i) => {
                         return <NavLink to={`/friend/${friend}`} className={classes.Friend} key={i}>{friend}</NavLink>
                     }) : <div className={classes.Links}><NavLink to={'/find-friends'}>Find Friends</NavLink></div>}
-                    {error && <p style={{color: 'red', textAlign: 'center'}}>{error}</p>}
+                    {error && null}
                 </div>
                 <div className={classes.Links}>
                     <NavLink to={'/friends'}>View Friends</NavLink>

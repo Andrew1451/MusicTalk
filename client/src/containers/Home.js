@@ -63,7 +63,7 @@ const Home = ({ user, onFetchAllPosts, onSubmitPost, allPosts, err }) => {
                 <button type='submit' className={classes.PostButton}>Post</button>
             </form>
             <hr/>
-            { err && <p className={classes.Error}>{err}</p> }
+            { err && null }
             <ul>
                 {allPosts.map(post => {
                     return <Post key={post.post_id} 

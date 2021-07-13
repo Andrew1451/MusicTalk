@@ -6,6 +6,7 @@ import classes from './Friends.module.css';
 
 const FindFriends = props => {
     useEffect(() => {
+        const source = axios.CancelToken.source();
         axios.get('https://music-talk.herokuapp.com/find-friends', {params: {user: props.state.user}})
         .then(res => {
             let friendArray = [];
@@ -17,7 +18,11 @@ const FindFriends = props => {
             setFriends(friendArray);
             setError(null);
         })
-        .catch(err => setError('Something went wrong =/'));
+        .catch(err => setError(`Couldn't fetch users =/`));
+        return () => {
+            // cancel unfinished requests due to quick rerenders (typing in search bar)
+            source.cancel();
+        }
     }, [props.state]);
     const [error, setError] = useState(null);
     const [added, setAdded] = useState([]);
@@ -50,7 +55,7 @@ const FindFriends = props => {
                 }
             })}
             </ul>
-            { error ? <p className={classes.Error}>{error}</p> : null }
+            { error && null }
         </div>
     )
 }
