@@ -149,6 +149,12 @@
     cursor: pointer;
 }
 
+.Err {
+    color: red;
+    text-align: 'center';
+    display: none;
+}
+
 .Comment textarea {
     margin: 0;
     background-color: black;

@@ -55,7 +55,7 @@ const FindFriends = props => {
                 }
             })}
             </ul>
-            { error && null }
+            { error && <p className={classes.Err}>{error}</p> }
         </div>
     )
 }

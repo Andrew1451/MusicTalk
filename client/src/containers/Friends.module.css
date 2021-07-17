@@ -57,6 +57,12 @@
     border: none;
 }
 
+.Err {
+    color: red;
+    padding-left: 34px;
+    display: none;
+}
+
 .Filter {
     margin: 0 auto;
     width: 81%;

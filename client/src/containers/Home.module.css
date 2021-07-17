@@ -51,6 +51,13 @@
     color: #d4fd02;
 }
 
+.Err {
+    color: red;
+    text-align: center;
+    margin-top: 26px;
+    display: none;
+}
+
 .Error {
     color: red;
     text-align: center;
