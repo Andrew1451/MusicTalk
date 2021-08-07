@@ -1,15 +1,7 @@
 import React from 'react';
-import { render as rtlRender } from '@testing-library/react'
+import { render } from '../test-utils';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import store from '../store'
 import Signup from './Signup';
-
-const render = (component) => rtlRender(
-    <Provider store={store()}>
-        {component}
-    </Provider>
-)
 
 describe('Signup', () => {
     test('cancelHandler function clears the form when Cancel button clicked', () => {

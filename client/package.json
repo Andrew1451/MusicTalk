@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "msw": "^0.33.2",
     "redux-mock-store": "^1.5.4"
   }
 }
