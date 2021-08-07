@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Signup from './Signup';
 
 describe('Signup', () => {
-    test('cancelHandler function clears the form when Cancel button clicked', () => {
+    test('cancelHandler function clears the form when Cancel button clicked', async () => {
         const { getByText, getByLabelText } = render(<Signup />)
         expect(getByText('Cancel')).toBeInTheDocument()
         //grab inputs
