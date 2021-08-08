@@ -9,7 +9,24 @@ function render(
   ui,
   {
     preloadedState,
-    store = configureStore({ reducer: rootReducer, preloadedState: {auth: {user: 'VanHalen'}} }),
+    store = configureStore({ reducer: rootReducer, preloadedState: {
+      auth: {
+        user: 'VanHalen',
+        isLoggedIn: true
+      },
+      // posts: {
+      //   allPosts: [
+      //     {
+      //       post_id: 'ze4q2',
+      //       post: 'This is a test post',
+      //       username: 'Shred Flanders',
+      //       user: 'VanHalen',
+      //       likeErr: null,
+      //       liked: false
+      //     }
+      //   ]
+      // }
+    }}),
     ...renderOptions
   } = {}
 ) {
