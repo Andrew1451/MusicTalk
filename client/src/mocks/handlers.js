@@ -17,12 +17,26 @@ export const handlers = [
             )
         );
     }),
-    rest.get('https://music-talk.herokuapp.com/VanHalen/posts'), (req, res, ctx) => {
+    rest.get('https://music-talk.herokuapp.com/VanHalen/posts', (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json({
                 posts: []
             })
         );
-    }
+    }),
+    rest.get('https://music-talk.herokuapp.com/VanHalen/all-posts', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({
+                allPosts: [{
+                    post_id: 'a1b2c3',
+                    post: 'Test post',
+                    username: 'Shred Flanders',
+                    likeErr: null,
+                    liked: false
+                }]
+            })
+        )
+    })
 ]
