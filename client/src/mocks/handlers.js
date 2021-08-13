@@ -21,7 +21,13 @@ export const handlers = [
         return res(
             ctx.status(200),
             ctx.json({
-                posts: []
+                posts: [{
+                    post_id: 'a1b2c3',
+                    created_at: '8/12/21 12:28',
+                    post: 'Test post',
+                    username: 'Shred Flanders',
+                    liked: false
+                }]
             })
         );
     }),
@@ -33,9 +39,31 @@ export const handlers = [
                     post_id: 'a1b2c3',
                     post: 'Test post',
                     username: 'Shred Flanders',
-                    likeErr: null,
+                    likeError: null,
                     liked: false
                 }]
+            })
+        )
+    }),
+    rest.post('https://music-talk.herokuapp.com/VanHalen/like', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({ data: {liked: true}})
+        )
+    }),
+    rest.get('https://music-talk.herokuapp.com/find-friends', (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json (
+            [{username: 'Friend1'}, {username: 'Friend2'}]
+        )
+      )
+    }),
+    rest.post('https://music-talk.herokuapp.com/VanHalen/add-friend', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({
+                added: 'friend added!'
             })
         )
     })
