@@ -14,23 +14,23 @@ function render(
         user: 'VanHalen',
         isLoggedIn: true
       },
-      posts: {
-        userPosts: [{
-          post_id: 'a1b2c3',
-          created_at: '8/12/21 12:28',
-          post: 'Test post',
-          username: 'Shred Flanders',
-          likeErr: null,
-          liked: false
-      }],
-        allPosts: [{
-            post_id: 'a1b2c3',
-            post: 'Test post',
-            username: 'Shred Flanders',
-            likeErr: null,
-            liked: false
-        }]
-      }
+      // posts: {
+      //   userPosts: [{
+      //     post_id: 'a1b2c3',
+      //     created_at: '8/12/21 12:28',
+      //     post: 'Test post',
+      //     username: 'Shred Flanders',
+      //     likeErr: null,
+      //     liked: false
+      // }],
+      //   allPosts: [{
+      //       post_id: 'a1b2c3',
+      //       post: 'Test post',
+      //       username: 'Shred Flanders',
+      //       likeErr: null,
+      //       liked: false
+      //   }]
+      // }
     }}),
     ...renderOptions
   } = {}

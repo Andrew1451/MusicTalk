@@ -66,5 +66,11 @@ export const handlers = [
                 added: 'friend added!'
             })
         )
+    }),
+    rest.post('https://music-talk.herokuapp.com/VanHalen/add-post', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({result: {insertId: 2}})
+        )
     })
 ]
