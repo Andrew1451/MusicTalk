@@ -72,5 +72,17 @@ export const handlers = [
             ctx.status(200),
             ctx.json({result: {insertId: 2}})
         )
+    }),
+    rest.get('https://music-talk.herokuapp.com/VanHalen/comments/a1b2c3', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json([{
+                comment_id: 123,
+                comment: 'Test comment',
+                username: 'VanHalen',
+                post: 'a1b2c3',
+                created_at: '8/22/21 01:15'
+            }])
+        )
     })
 ]

@@ -9,12 +9,11 @@ describe('Home', () => {
         expect(await findByText('Test post')).toBeInTheDocument()
     })
     test('type and submit a post, then show post', async () => {
-        const { findAllByRole, findByText, getByText, debug } = render(<Home />)
+        const { findAllByRole, findByText, getByText } = render(<Home />)
         expect(await findByText('Test post')).toBeInTheDocument()
         const textarea = await findAllByRole('textbox')
         userEvent.type(textarea[0], 'Another test post.')
         userEvent.click(getByText('Post'))
         expect(await findByText('Another test post.')).toBeInTheDocument()
-        debug()
     })
 })
